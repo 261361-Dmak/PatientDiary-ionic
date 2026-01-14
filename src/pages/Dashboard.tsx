@@ -2,10 +2,10 @@ import {
   IonContent, IonPage, IonHeader, IonToolbar, 
   IonTitle, IonButton, IonIcon, IonAvatar, IonButtons 
 } from '@ionic/react';
-import { book, calendar, medical, logOutOutline } from 'ionicons/icons'; // Added logOutOutline
+import { book, calendar, medical, logOutOutline, documentTextOutline } from 'ionicons/icons';
 import './Dashboard.css';
 import { useHistory } from 'react-router-dom';
-import { supabase } from '../supabaseClient'; // Import your supabase client
+import { supabase } from '../supabaseClient'; 
 
 const Dashboard: React.FC = () => {
     const history = useHistory();
@@ -13,7 +13,7 @@ const Dashboard: React.FC = () => {
     const handleLogout = async () => {
         const { error } = await supabase.auth.signOut();
         if (!error) {
-            history.push('/home'); // Redirect to login page after logout
+            history.push('/home'); 
         } else {
             alert("Error logging out: " + error.message);
         }
@@ -52,6 +52,11 @@ const Dashboard: React.FC = () => {
           <IonButton expand="block" className="dash-button" onClick={() => history.push('/inventory')}>
              <IonIcon slot="start" icon={medical} />
              ยารักษา
+          </IonButton>
+
+          <IonButton routerLink="/history" expand="block" className="dash-button">
+            <IonIcon slot="start" icon={documentTextOutline} />
+            ประวัติเคส
           </IonButton>
         </div>
       </IonContent>
