@@ -38,19 +38,19 @@ const DiaryCalender: React.FC = () => {
   // กดวันที่บน Calendar
   const onDateClick = (date: Date) => {
     setValue(date);
-    history.push(`/diary/${formatDate(date)}`);
+    history.push(`/diary/`);
   };
 
   // กดปุ่ม Diary ใต้ปฏิทิน
   const goToDiary = () => {
-    history.push(`/diary/${formatDate(value)}`);
+    history.push(`/diary/`);
   };
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Health Diary</IonTitle>
+          <IonTitle>Patient Diary</IonTitle>
           <IonIcon
             icon={notificationsOutline}
             slot="end"

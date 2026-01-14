@@ -19,6 +19,7 @@ import DoctorAppointmentList from './pages/appointment/DoctorAppointmentList';
 import DoctorAppointmentDetail from './pages/appointment/DoctorAppointmentDetail';
 import DiaryCalender from './pages/diary/DiaryCalender';
 import Diary from './pages/diary/Diary';
+import History from './pages/diary/History';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -26,6 +27,7 @@ import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
 import './theme/variables.css';
+import Contact from './pages/diary/Contact';
 
 setupIonicReact();
 
@@ -50,6 +52,12 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/diary">
           <Diary />
+        </Route>
+        <Route exact path="/history">
+          <History />
+        </Route>
+        <Route exact path="/contact">
+          <Contact />
         </Route>
         <Route exact path="/appointment-detail/:date">
           <AppointmentDetail />

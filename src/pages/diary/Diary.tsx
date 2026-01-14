@@ -18,7 +18,7 @@ const Diary: React.FC = () => {
         <div className="layout">
 
           {/* ===== Sidebar ===== */}
-          <aside className="sidebar">
+          {/* <aside className="sidebar">
             <div className="logo">
               <div className="logo-icon">❤️</div>
               <div>
@@ -45,11 +45,11 @@ const Diary: React.FC = () => {
                 Profile
               </div>
             </nav>
-          </aside>
+          </aside> */}
 
           {/* ===== Main Content ===== */}
           <main className="content">
-            <h1>ติดต่อหมอเคสใหม่</h1>
+            <h1>บันทึกประจำวัน</h1>
             <p className="subtitle">
               กรอกข้อมูลเพื่อให้แพทย์ช่วยให้คำปรึกษา
             </p>
