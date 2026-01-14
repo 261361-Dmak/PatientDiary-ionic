@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { IonPage, IonContent, IonIcon, IonCard, IonCardContent, IonSearchbar, IonModal, IonDatetime, IonButton } from '@ionic/react';
-import { documentText, personCircleOutline, calendarOutline } from 'ionicons/icons';
+import { IonPage, IonContent, IonIcon, IonCard, IonCardContent, IonSearchbar, IonModal, IonDatetime, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton } from '@ionic/react';
+import { documentText, personCircleOutline, calendarOutline, arrowBack } from 'ionicons/icons';
 import './History.css';
+import { useHistory } from 'react-router-dom';
 
 interface MedicalCase {
   id: string;
@@ -95,6 +96,7 @@ const CaseCard: React.FC<{ case: MedicalCase }> = ({ case: c }) => (
 );
 
 const History: React.FC = () => {
+  const history = useHistory();
   const [searchText, setSearchText] = useState('');
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -116,6 +118,14 @@ const History: React.FC = () => {
 
   return (
     <IonPage>
+      <IonHeader className="ion-no-border">
+        <IonToolbar className="history-header">
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/dashboard" text="ย้อนกลับ" className="custom-back-btn"/>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+
       <IonContent className="history-content">
         <div className="history-header-section">
           <h1 className="history-title">ประวัติเคส</h1>

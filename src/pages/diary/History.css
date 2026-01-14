@@ -27,6 +27,15 @@
   --background: var(--history-bg);
 }
 
+
+.history-header {
+  --background: #fce4ec;
+}
+
+.custom-back-btn {
+  color: #9f0085ff;
+}
+
 .history-header-section {
   padding: var(--spacing-md) 20px 8px 20px;
   background: transparent;
