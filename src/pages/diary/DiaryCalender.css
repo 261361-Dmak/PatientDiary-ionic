@@ -1,0 +1,29 @@
+.welcome-text {
+  font-size: 22px;
+  font-weight: bold;
+  margin-left: 20px; 
+  margin-bottom: 12px;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.react-calendar {
+  width: 100%;
+  border: none;
+}
+
+.summary-row {
+  display: flex;
+  gap: 8px;
+}
+
+.summary-row ion-card {
+  flex: 1;
+  text-align: center;
+}
