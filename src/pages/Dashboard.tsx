@@ -54,10 +54,6 @@ const Dashboard: React.FC = () => {
              ยารักษา
           </IonButton>
 
-          <IonButton routerLink="/history" expand="block" className="dash-button">
-            <IonIcon slot="start" icon={documentTextOutline} />
-            ประวัติเคส
-          </IonButton>
         </div>
       </IonContent>
     </IonPage>

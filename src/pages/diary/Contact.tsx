@@ -5,7 +5,8 @@ import {
   IonMenuButton,
   IonPage,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  IonButton,
 } from "@ionic/react";
 import React from "react";
 import DoctorCard, { Doctor } from "../../components/DoctorCard";
@@ -66,6 +67,13 @@ const Contact: React.FC = () => {
           </div>
         </div>
       </IonContent>
+      <IonButton
+        expand="block"
+        style={{ marginTop: 12 }}
+        onClick={() => window.history.back()}
+        >
+          Back
+      </IonButton>
     </IonPage>
   );
 };

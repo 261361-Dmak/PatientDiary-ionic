@@ -119,14 +119,14 @@ const Diary: React.FC = () => {
                 <li>The doctor will respond within 24 hours.</li>
                 <li>In case of emergency, contact the hospital directly.</li>
               </ul>
-              <IonButton
-                expand="block"
-                style={{ marginTop: 12 }}
-                onClick={() => window.history.back()}
-                >
-                    Back
-              </IonButton>
             </div>
+            <IonButton
+              expand="block"
+              style={{ marginTop: 12 }}
+              onClick={() => window.history.back()}
+              >
+                Back
+            </IonButton>
           </main>
         </div>
       </IonContent>
