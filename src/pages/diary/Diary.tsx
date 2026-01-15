@@ -1,7 +1,8 @@
 import {
   IonPage,
   IonContent,
-  IonIcon
+  IonIcon,
+  IonButton
 } from '@ionic/react';
 import {
   homeOutline,
@@ -10,6 +11,7 @@ import {
   documentTextOutline
 } from 'ionicons/icons';
 import './Diary.css';
+import { Route } from 'react-router';
 
 const Diary: React.FC = () => {
   return (
@@ -49,45 +51,45 @@ const Diary: React.FC = () => {
 
           {/* ===== Main Content ===== */}
           <main className="content">
-            <h1>บันทึกประจำวัน</h1>
+            <h1>Diary</h1>
             <p className="subtitle">
-              กรอกข้อมูลเพื่อให้แพทย์ช่วยให้คำปรึกษา
+              Fill in the information.
             </p>
 
             <div className="card">
               {/* Lifestyle */}
-              <h3>พฤติกรรมการใช้ชีวิต</h3>
+              <h3>Habits</h3>
               <p className="field-desc">
-                ระบุรายละเอียดการใช้ชีวิตประจำวัน อาหาร การออกกำลังกาย ฯลฯ
+                Describe details of your daily lifestyle, diet, exercise, etc.
               </p>
               <textarea
-                placeholder="ตอนนี้ใช้ชีวิตอย่างไร? มีกิจกรรมอะไรบ้าง? กินอาหารประเภทใด?"
+                placeholder="How are you living your life now? What activities are you doing? What kind of food are you eating?"
               />
 
               {/* Symptom */}
               <h3>
-                ลักษณะอาการหรือบาดแผล <span className="required">*</span>
+                Symptoms <span className="required">*</span>
               </h3>
               <p className="field-desc">
-                อธิบายลักษณะอาการ บาดแผล ความเจ็บปวด หรือสิ่งผิดปกติที่พบ
+                Describe any symptoms, pain, or abnormalities you experience.
               </p>
               <textarea
-                placeholder="ระบุอาการ ตำแหน่ง ลักษณะ สี ขนาด ความเจ็บปวด ฯลฯ"
+                placeholder="Describe the symptoms, location, appearance, color, size, pain, etc."
               />
 
               {/* Upload */}
-              <h3>แนบรูปภาพอาการ (ถ้ามี)</h3>
+              <h3>Attach photos of the symptoms (if available).</h3>
               <p className="field-desc">
-                อัปโหลดรูปภาพเพื่อให้แพทย์เห็นอาการได้ชัดเจนยิ่งขึ้น
+                Upload photos to help your doctor see your symptoms more clearly.
               </p>
 
               <div className="upload-box">
                 <div className="upload-icon">⬆️</div>
                 <p className="upload-text">
-                  คลิกเพื่อเลือกไฟล์ หรือลากไฟล์มาวางที่นี่
+                  drop the file here.
                 </p>
                 <p className="upload-hint">
-                  รองรับไฟล์ JPG, PNG (สูงสุด 10 รูป)
+                  Supports JPG and PNG files (up to 10 images).
                 </p>
 
                 <input
@@ -96,27 +98,34 @@ const Diary: React.FC = () => {
                   multiple
                   hidden
                 />
-                <button className="upload-btn">เลือกรูปภาพ</button>
+                <button className="upload-btn">Select a photo.</button>
               </div>
 
               {/* Buttons */}
               <div className="action-buttons">
-                <button className="btn-reset">ล้างข้อมูล</button>
+                <button className="btn-reset">Clear</button>
                 <button className="btn-submit">
-                  ส่งข้อมูลถึงแพทย์
+                  Save
                 </button>
               </div>
             </div>
 
             {/* Recommendation */}
             <div className="recommend-box">
-              <h4>💡 คำแนะนำ</h4>
+              <h4>💡 Recommendations</h4>
               <ul>
-                <li>กรอกข้อมูลให้ละเอียดเพื่อให้แพทย์สามารถให้คำแนะนำได้ตรงจุด</li>
-                <li>ถ่ายรูปอาการในแสงสว่างเพื่อความชัดเจน</li>
-                <li>แพทย์จะตอบกลับภายใน 24 ชั่วโมง</li>
-                <li>กรณีฉุกเฉินให้ติดต่อโรงพยาบาลโดยตรง</li>
+                <li>Please fill out the information completely so that the doctor can provide accurate advice.</li>
+                <li>Take photos of the symptoms in bright light for clarity.</li>
+                <li>The doctor will respond within 24 hours.</li>
+                <li>In case of emergency, contact the hospital directly.</li>
               </ul>
+              <IonButton
+                expand="block"
+                style={{ marginTop: 12 }}
+                onClick={() => window.history.back()}
+                >
+                    Back
+              </IonButton>
             </div>
           </main>
         </div>

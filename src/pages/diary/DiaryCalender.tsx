@@ -135,6 +135,27 @@ const DiaryCalender: React.FC = () => {
             </IonCardContent>
           </IonCard>
         </div>
+        <IonButton
+          expand="block"
+          style={{ marginTop: 12 }}
+          routerLink="/history"
+          >
+            History
+        </IonButton>
+        <IonButton
+          expand="block"
+          style={{ marginTop: 12 }}
+          routerLink="/contact"
+          >
+            Contact
+        </IonButton>
+        <IonButton
+          expand="block"
+          style={{ marginTop: 12 }}
+          onClick={() => window.history.back()}
+          >
+            Back
+        </IonButton>
       </IonContent>
     </IonPage>
   );
