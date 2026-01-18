@@ -46,3 +46,43 @@
   padding: 8px 14px;
 }
 
+/* หัวข้อปฏิทิน */
+.calendar-header.large-title {
+  font-size: 28px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ตัวเลขวันในปฏิทิน */
+.react-calendar {
+  font-size: 20px; /* จากปกติ ~14px */
+}
+
+/* วัน (1,2,3,...) */
+.react-calendar__tile {
+  padding: 14px 6px;
+  font-size: 20px;
+}
+
+/* ชื่อวัน (จ,อ,พ...) */
+.react-calendar__month-view__weekdays {
+  font-size: 18px;
+}
+
+/* วันที่ถูกเลือก */
+.react-calendar__tile--active {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.large-btn-text {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.calendar-center {
+  display: flex;
+  justify-content: center;
+}

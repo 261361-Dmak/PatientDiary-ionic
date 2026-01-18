@@ -71,18 +71,20 @@ const DiaryCalender: React.FC = () => {
         <h2 className="welcome-text large-title">สวัสดีวันจันทร์</h2>
 
         {/* Calendar */}
-        <IonCard>
+        <IonCard className='flex-center'>
           <IonCardContent>
             <div className="calendar-header large-title">
               <IonIcon icon={calendarOutline} />
               <span>ปฏิทิน</span>
             </div>
 
+            <div className="calendar-center">
             <Calendar
               locale="th-TH"
               value={value}
               onClickDay={onDateClick}
             />
+            </div>
 
             {/* Diary Button */}
             <IonButton
@@ -90,7 +92,7 @@ const DiaryCalender: React.FC = () => {
               style={{ marginTop: 12 }}
               onClick={goToDiary}
             >
-              <IonIcon icon={calendarOutline} slot="start" />
+            <IonIcon icon={calendarOutline} slot="start" />
               <div className='large-title'>บันทึก</div>
             </IonButton>
           </IonCardContent>
