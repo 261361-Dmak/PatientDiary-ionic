@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   IonPage,
   IonContent,
@@ -7,7 +7,6 @@ import {
   IonTitle
 } from '@ionic/react';
 import './Diary.css';
-const [otherFood, setOtherFood] = useState('');
 const foodOptions = [
   { id: 1, name: 'ข้าวผัด', img: '/assets/Diary/01.jpg' },
   { id: 2, name: 'ข้าวราดแกง', img: '/assets/Diary/02.jpg' },
