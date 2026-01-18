@@ -1,132 +1,165 @@
+import { useState } from 'react';
 import {
   IonPage,
   IonContent,
-  IonIcon,
-  IonButton
+  IonHeader,
+  IonToolbar,
+  IonTitle
 } from '@ionic/react';
-import {
-  homeOutline,
-  callOutline,
-  personOutline,
-  documentTextOutline
-} from 'ionicons/icons';
 import './Diary.css';
-import { Route } from 'react-router';
+const [otherFood, setOtherFood] = useState('');
+const foodOptions = [
+  { id: 1, name: 'ข้าวผัด', img: '/assets/Diary/01.jpg' },
+  { id: 2, name: 'ข้าวราดแกง', img: '/assets/Diary/02.jpg' },
+  { id: 3, name: 'ก๋วยเตี๋ยว', img: '/assets/Diary/03.jpg' },
+  { id: 4, name: 'ข้าวไข่เจียว', img: '/assets/Diary/04.jpg' },
+  { id: 5, name: 'ส้มตำ', img: '/assets/Diary/05.jpg' },
+  { id: 6, name: 'ผัดไทย', img: '/assets/Diary/06.jpg' },
+  { id: 7, name: 'ผัดกะเพรา', img: '/assets/Diary/07.jpg' },
+  { id: 8, name: 'ข้าวมันไก่', img: '/assets/Diary/08.jpg' },
+  { id: 9, name: 'ข้าวซอย', img: '/assets/Diary/09.jpg' }
+];
 
 const Diary: React.FC = () => {
+  const [feeling, setFeeling] = useState<string | null>(null);
+  const [painLevel, setPainLevel] = useState<string | null>(null);
+  const [selectedFood, setSelectedFood] = useState<number | null>(null);
+
   return (
     <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Patient Diary</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+
       <IonContent fullscreen>
         <div className="layout">
-
-          {/* ===== Sidebar ===== */}
-          {/* <aside className="sidebar">
-            <div className="logo">
-              <div className="logo-icon">❤️</div>
-              <div>
-                <h2>Patient Diary</h2>
-                <p>Health Tracker</p>
-              </div>
-            </div>
-
-            <nav className="menu">
-              <div className="menu-item">
-                <IonIcon icon={homeOutline} />
-                Home
-              </div>
-              <div className="menu-item">
-                <IonIcon icon={documentTextOutline} />
-                Case History
-              </div>
-              <div className="menu-item">
-                <IonIcon icon={callOutline} />
-                Contact Doctor
-              </div>
-              <div className="menu-item">
-                <IonIcon icon={personOutline} />
-                Profile
-              </div>
-            </nav>
-          </aside> */}
-
-          {/* ===== Main Content ===== */}
           <main className="content">
-            <h1>Diary</h1>
+
+            <h1>บันทึกอาการวันนี้</h1>
             <p className="subtitle">
-              Fill in the information.
+              กรอกข้อมูลเพื่อให้แพทย์ช่วยให้คำปรึกษา
             </p>
 
             <div className="card">
-              {/* Lifestyle */}
-              <h3>Habits</h3>
+              {/* ===== Lifestyle ===== */}
+              <h3>พฤติกรรมการใช้ชีวิต</h3>
               <p className="field-desc">
-                Describe details of your daily lifestyle, diet, exercise, etc.
+                ระบุรายละเอียดการใช้ชีวิตประจำวัน อาหาร การออกกำลังกาย ฯลฯ
               </p>
-              <textarea
-                placeholder="How are you living your life now? What activities are you doing? What kind of food are you eating?"
-              />
+              <textarea placeholder="ตอนนี้ใช้ชีวิตอย่างไร?" />
 
-              {/* Symptom */}
+              {/* ===== Symptom ===== */}
               <h3>
-                Symptoms <span className="required">*</span>
+                ลักษณะอาการหรือบาดแผล <span className="required">*</span>
               </h3>
               <p className="field-desc">
-                Describe any symptoms, pain, or abnormalities you experience.
+                อธิบายลักษณะอาการหรือสิ่งผิดปกติที่พบ
               </p>
-              <textarea
-                placeholder="Describe the symptoms, location, appearance, color, size, pain, etc."
-              />
+              <textarea placeholder="ระบุอาการ ตำแหน่ง ลักษณะ ฯลฯ" />
 
-              {/* Upload */}
-              <h3>Attach photos of the symptoms (if available).</h3>
+              {/* ===== Food Image Select ===== */}
+              <h3>
+                อาหารที่รับประทาน <span className="required">*</span>
+              </h3>
               <p className="field-desc">
-                Upload photos to help your doctor see your symptoms more clearly.
+                แตะที่รูปอาหารเพื่อเลือก (เลือกได้ 1 อย่าง)
+              </p>
+
+              <div className="food-grid">
+                {foodOptions.map(food => (
+                  <button
+                    key={food.id}
+                    type="button"
+                    className={`food-card ${
+                      selectedFood === food.id ? 'active' : ''
+                    }`}
+                    onClick={() => setSelectedFood(food.id)}
+                  >
+                    <img src={food.img} alt={food.name} />
+                    <div className="food-name">{food.name}</div>
+                  </button>
+                ))}
+              </div>
+              
+
+              {/* ===== Feeling ===== */}
+              <h3>
+                ความรู้สึกวันนี้ <span className="required">*</span>
+              </h3>
+              <p className="field-desc">
+                เลือกระดับความรู้สึกของคุณในวันนี้
+              </p>
+
+              <div className="choice-group">
+                {[
+                  { label: 'แย่มาก', emoji: '😞' },
+                  { label: 'ไม่ค่อยดี', emoji: '😕' },
+                  { label: 'ปกติ', emoji: '😐' },
+                  { label: 'ดี', emoji: '🙂' },
+                  { label: 'ดีมาก', emoji: '😁' }
+                ].map(item => (
+                  <button
+                    key={item.label}
+                    className={`choice-btn ${
+                      feeling === item.label ? 'active' : ''
+                    }`}
+                    onClick={() => setFeeling(item.label)}
+                  >
+                    {item.emoji} {item.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* ===== Pain Level ===== */}
+              <h3>
+                ระดับความเจ็บปวด / อาการป่วย <span className="required">*</span>
+              </h3>
+              <p className="field-desc">
+                ประเมินระดับความรุนแรงของอาการ
+              </p>
+
+              <div className="choice-group">
+                {[
+                  { label: 'ไม่เจ็บ', style: 'success' },
+                  { label: 'เจ็บน้อย' },
+                  { label: 'เจ็บปานกลาง' },
+                  { label: 'เจ็บมาก' },
+                  { label: 'เจ็บสุด', style: 'danger' }
+                ].map(item => (
+                  <button
+                    key={item.label}
+                    className={`choice-btn ${item.style ?? ''} ${
+                      painLevel === item.label ? 'active' : ''
+                    }`}
+                    onClick={() => setPainLevel(item.label)}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* ===== Upload ===== */}
+              <h3>แนบรูปภาพอาการ (ถ้ามี)</h3>
+              <p className="field-desc">
+                อัปโหลดรูปเพื่อให้แพทย์ประเมินได้ชัดเจน
               </p>
 
               <div className="upload-box">
                 <div className="upload-icon">⬆️</div>
-                <p className="upload-text">
-                  drop the file here.
-                </p>
-                <p className="upload-hint">
-                  Supports JPG and PNG files (up to 10 images).
-                </p>
-
-                <input
-                  type="file"
-                  accept="image/png, image/jpeg"
-                  multiple
-                  hidden
-                />
-                <button className="upload-btn">Select a photo.</button>
+                <p className="upload-text">คลิกเพื่อเลือกไฟล์</p>
+                <p className="upload-hint">รองรับ JPG, PNG</p>
+                <button className="upload-btn">เลือกรูปภาพ</button>
               </div>
 
-              {/* Buttons */}
+              {/* ===== Buttons ===== */}
               <div className="action-buttons">
-                <button className="btn-reset">Clear</button>
-                <button className="btn-submit">
-                  Save
-                </button>
+                <button className="btn-reset">ล้างข้อมูล</button>
+                <button className="btn-submit">ส่งข้อมูลถึงแพทย์</button>
               </div>
             </div>
 
-            {/* Recommendation */}
-            <div className="recommend-box">
-              <h4>💡 Recommendations</h4>
-              <ul>
-                <li>Please fill out the information completely so that the doctor can provide accurate advice.</li>
-                <li>Take photos of the symptoms in bright light for clarity.</li>
-                <li>The doctor will respond within 24 hours.</li>
-                <li>In case of emergency, contact the hospital directly.</li>
-              </ul>
-            </div>
-            <IonButton
-              expand="block"
-              style={{ marginTop: 12 }}
-              onClick={() => window.history.back()}
-              >
-                Back
-            </IonButton>
           </main>
         </div>
       </IonContent>
