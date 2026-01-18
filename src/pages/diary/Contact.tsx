@@ -7,6 +7,7 @@ import {
   IonTitle,
   IonToolbar,
   IonButton,
+  IonBackButton
 } from "@ionic/react";
 import React, { useEffect } from "react";
 import DoctorCard, { Doctor } from "../../components/DoctorCard";
@@ -15,31 +16,13 @@ import "./Contact.css";
 const doctors: Doctor[] = [
   {
     id: 1,
-    name: "Dr. Somchai Prasert",
-    specialty: "Cardiologist",
-    phone: "+66 2 123 4567",
-    email: "somchai.prasert@hospital.com",
-    lineId: "dr.somchai.cardio",
-    avatar: "https://i.pravatar.cc/200?img=3",
-  },
-  {
-    id: 2,
-    name: "Dr. Nittaya Wong",
-    specialty: "General Practitioner",
-    phone: "+66 2 234 5678",
-    email: "nittaya.wong@clinic.com",
-    lineId: "dr.nittaya.gp",
-    avatar: "https://i.pravatar.cc/200?img=5",
-  },
-  {
-    id: 3,
-    name: "Dr. Apinya Chen",
-    specialty: "Dermatologist",
-    phone: "+66 2 345 6789",
-    email: "apinya.chen@skincare.com",
-    lineId: "dr.apinya.derm",
-    avatar: "https://i.pravatar.cc/200?img=47",
-  },
+    name: "หมอเดียร์",
+    specialty: "Applied Thai Traditional Medicine",
+    phone: "082-152-9499",
+    email: "-",
+    lineId: "-",
+    avatar: "assets/Diary/doctor/doctordeer.jpg",
+  }
 ];
 
 // useEffect(() => {
@@ -52,19 +35,23 @@ const doctors: Doctor[] = [
 const Contact: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader className="cd-topbar">
-        <IonToolbar className="cd-toolbar">
-          {/* ปุ่มเมนู: mobile จะเป็น hamburger, desktop ยังอยู่ได้แต่ไม่เกะกะ */}
+      <IonHeader>
+        {/* <IonToolbar className="cd-toolbar">
           <IonButtons slot="start">
             <IonMenuButton menu="mainMenu"/>
           </IonButtons>
           <IonTitle >บันทึกประจำวัน</IonTitle>
+        </IonToolbar> */}
+        <IonToolbar className="history-header">
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/diarycalender" text="ย้อนกลับ" className="custom-back-btn"/>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen className="cd-content">
         <div className="cd-wrap">
-          <h1 className="cd-title">ติดต่อแพทย์</h1>
+          <h1 className="cd-title large-title">ติดต่อแพทย์</h1>
           <p className="cd-sub">Reach out to your healthcare providers</p>
 
           <div className="cd-grid">
@@ -74,13 +61,6 @@ const Contact: React.FC = () => {
           </div>
         </div>
       </IonContent>
-      <IonButton
-        expand="block"
-        style={{ marginTop: 12 }}
-        onClick={() => window.history.back()}
-        >
-          ย้อนกลับ
-      </IonButton>
     </IonPage>
   );
 };

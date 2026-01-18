@@ -4,19 +4,22 @@ import {
   IonContent,
   IonHeader,
   IonToolbar,
-  IonTitle
+  IonTitle,
+  IonButton,
+  IonBackButton,
+  IonButtons
 } from '@ionic/react';
 import './Diary.css';
 const foodOptions = [
-  { id: 1, name: 'ข้าวผัด', img: '/assets/Diary/01.jpg' },
-  { id: 2, name: 'ข้าวราดแกง', img: '/assets/Diary/02.jpg' },
-  { id: 3, name: 'ก๋วยเตี๋ยว', img: '/assets/Diary/03.jpg' },
-  { id: 4, name: 'ข้าวไข่เจียว', img: '/assets/Diary/04.jpg' },
-  { id: 5, name: 'ส้มตำ', img: '/assets/Diary/05.jpg' },
-  { id: 6, name: 'ผัดไทย', img: '/assets/Diary/06.jpg' },
-  { id: 7, name: 'ผัดกะเพรา', img: '/assets/Diary/07.jpg' },
-  { id: 8, name: 'ข้าวมันไก่', img: '/assets/Diary/08.jpg' },
-  { id: 9, name: 'ข้าวซอย', img: '/assets/Diary/09.jpg' }
+  { id: 1, name: 'ข้าวผัด', img: '/assets/Diary/foods/01.jpg' },
+  { id: 2, name: 'ข้าวราดแกง', img: '/assets/Diary/foods/02.jpg' },
+  { id: 3, name: 'ก๋วยเตี๋ยว', img: '/assets/Diary/foods/03.jpg' },
+  { id: 4, name: 'ข้าวไข่เจียว', img: '/assets/Diary/foods/04.jpg' },
+  { id: 5, name: 'ส้มตำ', img: '/assets/Diary/foods/05.jpg' },
+  { id: 6, name: 'ผัดไทย', img: '/assets/Diary/foods/06.jpg' },
+  { id: 7, name: 'ผัดกะเพรา', img: '/assets/Diary/foods/07.jpg' },
+  { id: 8, name: 'ข้าวมันไก่', img: '/assets/Diary/foods/08.jpg' },
+  { id: 9, name: 'ข้าวซอย', img: '/assets/Diary/foods/09.jpg' }
 ];
 
 const Diary: React.FC = () => {
@@ -27,8 +30,10 @@ const Diary: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonTitle>Patient Diary</IonTitle>
+        <IonToolbar className="history-header">
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/diarycalender" text="ย้อนกลับ" className="custom-back-btn"/>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
 
@@ -43,7 +48,9 @@ const Diary: React.FC = () => {
 
             <div className="card">
               {/* ===== Lifestyle ===== */}
-              <h3>พฤติกรรมการใช้ชีวิต</h3>
+              <h3>
+                พฤติกรรมการใช้ชีวิต <span className="required">*</span>
+              </h3>
               <p className="field-desc">
                 ระบุรายละเอียดการใช้ชีวิตประจำวัน อาหาร การออกกำลังกาย ฯลฯ
               </p>
@@ -81,7 +88,10 @@ const Diary: React.FC = () => {
                   </button>
                 ))}
               </div>
-              
+              <h3>
+                อาหารเพิ่มเติม
+              </h3>
+              <textarea placeholder="ระบุอาหารเพิ่มเติม" />
 
               {/* ===== Feeling ===== */}
               <h3>

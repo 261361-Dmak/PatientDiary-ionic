@@ -248,3 +248,8 @@ textarea::placeholder {
   background-color: #d1d5db !important;
 }
 /* ===== Submit button (force visible) ===== */
+
+.large-title {
+  font-size: 32px;
+  font-weight: 700;
+}

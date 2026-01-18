@@ -64,3 +64,8 @@
   color: #111111;
   font-weight: 800;
 }
+
+.large-title {
+  font-size: 32px;
+  font-weight: 700;
+}

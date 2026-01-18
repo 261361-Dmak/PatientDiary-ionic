@@ -27,3 +27,22 @@
   flex: 1;
   text-align: center;
 }
+
+/* หัวข้อใหญ่ */
+.large-title {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* ข้อความสรุป */
+.summary-label {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* Badge ตัวเลข */
+.summary-badge {
+  font-size: 20px;
+  padding: 8px 14px;
+}
+

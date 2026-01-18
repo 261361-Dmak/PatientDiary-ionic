@@ -128,7 +128,7 @@ const History: React.FC = () => {
       <IonHeader className="ion-no-border">
         <IonToolbar className="history-header">
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/dashboard" text="ย้อนกลับ" className="custom-back-btn"/>
+            <IonBackButton defaultHref="/diarycalender" text="ย้อนกลับ" className="custom-back-btn"/>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
