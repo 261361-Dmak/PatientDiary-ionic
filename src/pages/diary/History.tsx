@@ -52,12 +52,12 @@ const mockCases: MedicalCase[] = [
   }
 ];
 
-useEffect(() => {
-  const fetchdata = async () => {
-    // Placeholder for future data fetching logic
-  }
-  document.title = "Diary History - Patient Diary";
-}, []);
+// useEffect(() => {
+//   const fetchdata = async () => {
+//     // Placeholder for future data fetching logic
+//   }
+//   document.title = "Diary History - Patient Diary";
+// }, []);
 
 const CaseCard: React.FC<{ case: MedicalCase }> = ({ case: c }) => (
   <IonCard className="case-card">

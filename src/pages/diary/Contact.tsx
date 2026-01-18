@@ -42,12 +42,12 @@ const doctors: Doctor[] = [
   },
 ];
 
-useEffect(() => {
-  const fetcgdata = async () => {
-    // Placeholder for future data fetching logic
-  }
-  document.title = "Contact Doctor - Patient Diary";
-}, []);
+// useEffect(() => {
+//   const fetcgdata = async () => {
+//     // Placeholder for future data fetching logic
+//   }
+//   document.title = "Contact Doctor - Patient Diary";
+// }, []);
 
 const Contact: React.FC = () => {
   return (
