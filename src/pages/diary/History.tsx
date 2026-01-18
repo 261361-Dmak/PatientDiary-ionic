@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IonPage, IonContent, IonIcon, IonCard, IonCardContent, IonSearchbar, IonModal, IonDatetime, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton } from '@ionic/react';
 import { documentText, personCircleOutline, calendarOutline, arrowBack } from 'ionicons/icons';
 import './History.css';
@@ -52,6 +52,13 @@ const mockCases: MedicalCase[] = [
   }
 ];
 
+// useEffect(() => {
+//   const fetchdata = async () => {
+//     // Placeholder for future data fetching logic
+//   }
+//   document.title = "Diary History - Patient Diary";
+// }, []);
+
 const CaseCard: React.FC<{ case: MedicalCase }> = ({ case: c }) => (
   <IonCard className="case-card">
     <IonCardContent>
@@ -61,7 +68,7 @@ const CaseCard: React.FC<{ case: MedicalCase }> = ({ case: c }) => (
             <div className="case-icon">
               <IonIcon icon={documentText} />
             </div>
-            <h3 className="case-title">เคสวันที่ {c.date}</h3>
+            <h3 className="case-title">บันทึกวันที่ {c.date}</h3>
           </div>
           <span className="status-text">
             {c.status === 'answered' ? 'แพทย์ตอบแล้ว' : 'รอคำตอบ'}
@@ -74,11 +81,11 @@ const CaseCard: React.FC<{ case: MedicalCase }> = ({ case: c }) => (
       <div className="case-body">
         {c.medications && (
           <>
-            <span className="info-label">Habits:</span>
+            <span className="info-label">พฤติกรรม:</span>
             <p className="info-value">{c.medications}</p>
           </>
         )}
-        <span className="info-label">Symptoms:</span>
+        <span className="info-label">อาการ:</span>
         <p className="info-value">{c.symptoms}</p>
       </div>
 
@@ -86,7 +93,7 @@ const CaseCard: React.FC<{ case: MedicalCase }> = ({ case: c }) => (
         <div className="doctor-response-box">
           <div className="doctor-title">
             <IonIcon icon={personCircleOutline} />
-            Doctor Response:
+            แพทย์ ตอบกลับ:
           </div>
           <p className="doctor-desc">{c.doctorResponse}</p>
         </div>
@@ -121,15 +128,15 @@ const History: React.FC = () => {
       <IonHeader className="ion-no-border">
         <IonToolbar className="history-header">
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/dashboard" text="Back" className="custom-back-btn"/>
+            <IonBackButton defaultHref="/dashboard" text="ย้อนกลับ" className="custom-back-btn"/>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
 
       <IonContent className="history-content">
         <div className="history-header-section">
-          <h1 className="history-title">Diary History</h1>
-          <p className="history-subtitle">View your symptom history and doctor's responses.</p>
+          <h1 className="history-title">ประวัติการบันทึก</h1>
+          <p className="history-subtitle">ดูประวัติการบันมึกและการตอบกลับของแพทย์</p>
         </div>
 
         <div className="filter-card">
@@ -153,14 +160,14 @@ const History: React.FC = () => {
 
         {mockCases.length > 0 && (
           <div className="pagination-info">
-            show {mockCases.length} from {mockCases.length} diaries
+            แสดง {mockCases.length} จาก {mockCases.length} บันทึก
           </div>
         )}
 
         {mockCases.length === 0 && (
           <div className="empty-state">
             <IonIcon icon={documentText} className="empty-icon" />
-            <p>There is no diary yet.</p>
+            <p>ยังไม่มีการบันทึก</p>
           </div>
         )}
 
@@ -170,7 +177,7 @@ const History: React.FC = () => {
           className="date-picker-modal"
         >
           <div className="date-picker-container">
-            <h2 className="date-picker-title">Select a date.</h2>
+            <h2 className="date-picker-title">เลือกวัน</h2>
             <IonDatetime
               presentation="date"
               value={selectedDate}
@@ -183,7 +190,7 @@ const History: React.FC = () => {
               onClick={() => setShowDatePicker(false)}
               className="date-picker-close-btn"
             >
-              Close
+              ปิด
             </IonButton>
           </div>
         </IonModal>
