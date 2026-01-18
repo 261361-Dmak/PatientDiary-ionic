@@ -8,7 +8,7 @@ import {
   IonToolbar,
   IonButton,
 } from "@ionic/react";
-import React from "react";
+import React, { useEffect } from "react";
 import DoctorCard, { Doctor } from "../../components/DoctorCard";
 import "./Contact.css";
 
@@ -42,6 +42,13 @@ const doctors: Doctor[] = [
   },
 ];
 
+useEffect(() => {
+  const fetcgdata = async () => {
+    // Placeholder for future data fetching logic
+  }
+  document.title = "Contact Doctor - Patient Diary";
+}, []);
+
 const Contact: React.FC = () => {
   return (
     <IonPage>
@@ -51,13 +58,13 @@ const Contact: React.FC = () => {
           <IonButtons slot="start">
             <IonMenuButton menu="mainMenu"/>
           </IonButtons>
-          <IonTitle >Patient Diary</IonTitle>
+          <IonTitle >บันทึกประจำวัน</IonTitle>
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen className="cd-content">
         <div className="cd-wrap">
-          <h1 className="cd-title">Contact Doctor</h1>
+          <h1 className="cd-title">ติดต่อแพทย์</h1>
           <p className="cd-sub">Reach out to your healthcare providers</p>
 
           <div className="cd-grid">
@@ -72,7 +79,7 @@ const Contact: React.FC = () => {
         style={{ marginTop: 12 }}
         onClick={() => window.history.back()}
         >
-          Back
+          ย้อนกลับ
       </IonButton>
     </IonPage>
   );

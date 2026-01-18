@@ -51,14 +51,14 @@ const Diary: React.FC = () => {
 
           {/* ===== Main Content ===== */}
           <main className="content">
-            <h1>Diary</h1>
+            <h1>บันทึกประจำวัน</h1>
             <p className="subtitle">
-              Fill in the information.
+              กรุณากรอกข้อมูลให้ครบถ้วน
             </p>
 
             <div className="card">
               {/* Lifestyle */}
-              <h3>Habits</h3>
+              <h3>พฤติกรรม</h3>
               <p className="field-desc">
                 Describe details of your daily lifestyle, diet, exercise, etc.
               </p>
@@ -68,7 +68,7 @@ const Diary: React.FC = () => {
 
               {/* Symptom */}
               <h3>
-                Symptoms <span className="required">*</span>
+                อาการ <span className="required">*</span>
               </h3>
               <p className="field-desc">
                 Describe any symptoms, pain, or abnormalities you experience.

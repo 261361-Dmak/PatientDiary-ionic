@@ -50,7 +50,7 @@ const DiaryCalender: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Patient Diary</IonTitle>
+          <IonTitle>บันทึกประจำวัน</IonTitle>
           <IonIcon
             icon={notificationsOutline}
             slot="end"
@@ -61,14 +61,14 @@ const DiaryCalender: React.FC = () => {
 
       <IonContent fullscreen className="ion-padding">
         {/* Welcome */}
-        <h2 className="welcome-text">Welcome back</h2>
+        <h2 className="welcome-text">สวัสดีวันจันทร์</h2>
 
         {/* Calendar */}
         <IonCard>
           <IonCardContent>
             <div className="calendar-header">
               <IonIcon icon={calendarOutline} />
-              <span>Health Calendar</span>
+              <span>ปฏิทิน</span>
             </div>
 
             <Calendar
@@ -84,12 +84,12 @@ const DiaryCalender: React.FC = () => {
               onClick={goToDiary}
             >
               <IonIcon icon={calendarOutline} slot="start" />
-              Open Diary
+              บันทึก
             </IonButton>
           </IonCardContent>
         </IonCard>
 
-        {/* Today's Tasks */}
+        {/* Today's Tasks
         <IonCard>
           <IonCardContent>
             <h3>Today's Tasks</h3>
@@ -110,27 +110,27 @@ const DiaryCalender: React.FC = () => {
               </IonLabel>
             </IonItem>
           </IonCardContent>
-        </IonCard>
+        </IonCard> */}
 
         {/* Summary */}
         <div className="summary-row">
           <IonCard>
             <IonCardContent>
-              <p>Appointments</p>
+              <p>บันทึกไปแล้ว</p>
               <h2>2</h2>
             </IonCardContent>
           </IonCard>
 
           <IonCard>
             <IonCardContent>
-              <p>Medications</p>
-              <h2>3</h2>
+              <p>ระดับความเจ็บปวด</p>
+              <h2>30%</h2>
             </IonCardContent>
           </IonCard>
 
           <IonCard>
             <IonCardContent>
-              <p>Health Score</p>
+              <p>ระดับความสุข</p>
               <IonBadge color="success">85%</IonBadge>
             </IonCardContent>
           </IonCard>
@@ -140,21 +140,21 @@ const DiaryCalender: React.FC = () => {
           style={{ marginTop: 12 }}
           routerLink="/history"
           >
-            History
+            ประวัติการบันทึก
         </IonButton>
         <IonButton
           expand="block"
           style={{ marginTop: 12 }}
           routerLink="/contact"
           >
-            Contact
+            ติดต่อแพทย์
         </IonButton>
         <IonButton
           expand="block"
           style={{ marginTop: 12 }}
           onClick={() => window.history.back()}
           >
-            Back
+            ย้อนกลับ
         </IonButton>
       </IonContent>
     </IonPage>
