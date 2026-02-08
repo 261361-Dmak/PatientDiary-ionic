@@ -1,0 +1,20 @@
+.case-card {
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+
+.case-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: bold;
+}
+
+.case-header ion-icon {
+  font-size: 24px;
+  color: #e91e63;
+}
+
+.case-body p {
+  margin: 6px 0;
+}

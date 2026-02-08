@@ -1,0 +1,121 @@
+.report-content {
+  padding: 16px;
+  background: #1e1e1e;
+  color: #fff;
+}
+
+.report-title {
+  text-align: center;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* ===== Tabs ===== */
+.report-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 8px;
+}
+
+.report-tabs span {
+  color: grey;
+  font-size: 16px;
+}
+
+.report-tabs .active {
+  color: black;
+  border-bottom: 2px solid #FF70C1;
+  padding-bottom: 4px;
+}
+
+.report-month {
+  text-align: center;
+  margin-bottom: 16px;
+  color: black;
+}
+
+/* ===== Card ===== */
+.report-card {
+  background: #ffe0f2;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* ===== Mood Flow ===== */
+.mood-flow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.flow-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.flow-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #FF70C1;
+  margin-bottom: 6px;
+}
+
+.flow-dot.mood-good {
+  background: #FFD8EE;
+}
+
+.flow-line {
+  width: 2px;
+  height: 40px;
+  background: #fff;
+  margin-bottom: 6px;
+}
+
+/* ===== Mood Bar ===== */
+.mood-bar-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0;
+}
+
+.mood-item {
+  text-align: center;
+  font-size: 26px;
+  opacity: 0.35;
+}
+
+.mood-item span {
+  display: block;
+  font-size: 12px;
+  margin-top: 4px;
+  color: #ccc;
+}
+
+.mood-item.active {
+  opacity: 1;
+}
+
+.mood-item.active span {
+  color: #f0c6d9;
+}
+
+/* ===== Progress Bar ===== */
+.mood-bar-track {
+  width: 100%;
+  height: 18px;
+  background: #3a3a3a;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mood-bar-fill {
+  width: 100%;
+  height: 100%;
+  background-color: #FF70C1;
+}

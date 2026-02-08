@@ -113,7 +113,7 @@ textarea {
   border-radius: 16px;
   overflow: hidden;
   border: 3px solid transparent;
-  background: none;
+  background: #f6f6f6;
   cursor: pointer;
   transition: 0.2s ease;
 }
@@ -252,4 +252,114 @@ textarea::placeholder {
 .large-title {
   font-size: 32px;
   font-weight: 700;
+}
+
+.pink-save-btn {
+  width: 100%;
+  max-width: 100%;
+  margin: 12px 0;
+  height: 52px;
+  font-size: 18px;
+  font-weight: 600;
+  --border-radius: 14px;
+}
+
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.icon-item {
+  background: #f6f6f6;
+  border-radius: 16px;
+  padding: 12px 8px;
+  text-align: center;
+  color: #777;
+  border: none;
+}
+
+.icon-item .icon {
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.icon-item.active {
+  background: var(--ion-color-primary);
+  color: #4a2c3a;
+  box-shadow: 0 0 0 2px var(--ion-color-primary-shade);
+}
+
+.mood-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0;
+}
+
+.mood-btn {
+  font-size: 28px;
+  background: #f2f2f2;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  border: none;
+  opacity: 0.6;
+}
+
+.mood-btn.active {
+  background: var(--ion-color-primary);
+  opacity: 1;
+  box-shadow: 0 0 0 3px var(--ion-color-primary-shade);
+}
+
+.pain-row {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  overflow-x: auto;
+}
+
+.pain-btn {
+  min-width: 72px;
+  padding: 10px;
+  border-radius: 14px;
+  background: #f5f5f5;
+  color: #666;
+  border: none;
+  text-align: center;
+}
+
+.pain-btn .emoji {
+  font-size: 22px;
+}
+
+.pain-btn.active {
+  background: var(--ion-color-primary);
+  color: #4a2c3a;
+  box-shadow: 0 0 0 2px var(--ion-color-primary-shade);
+}
+
+/* ระดับสุด */
+.pain-btn.danger.active {
+  background: #f0c6d9;
+  color: #7a1f4b;
+}
+
+.success-alert {
+  --background: #fff0f7;
+  --color: #4a2c3a;
+}
+
+.success-alert .alert-title {
+  color: #7a1f4b;
+  font-weight: 700;
+}
+
+.success-alert .alert-message {
+  color: #555;
+}
+
+.success-alert .alert-button {
+  color: #7a1f4b;
+  font-weight: 600;
 }

@@ -20,6 +20,7 @@ import DoctorAppointmentDetail from './pages/appointment/DoctorAppointmentDetail
 import DiaryCalender from './pages/diary/DiaryCalender';
 import Diary from './pages/diary/Diary';
 import History from './pages/diary/History';
+import Report from './pages/diary/Report';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -58,6 +59,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/contact">
           <Contact />
+        </Route>
+        <Route exact path="/report">
+          <Report />
         </Route>
         <Route exact path="/appointment-detail/:date">
           <AppointmentDetail />

@@ -1,88 +1,70 @@
-.welcome-text {
-  font-size: 22px;
-  font-weight: bold;
-  margin-left: 20px; 
-  margin-bottom: 12px;
-}
-
-.calendar-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.react-calendar {
-  width: 100%;
-  border: none;
-}
-
-.summary-row {
-  display: flex;
-  gap: 8px;
-}
-
-.summary-row ion-card {
-  flex: 1;
-  text-align: center;
-}
-
-/* หัวข้อใหญ่ */
-.large-title {
-  font-size: 32px;
-  font-weight: 700;
-}
-
-/* ข้อความสรุป */
-.summary-label {
-  font-size: 22px;
-  font-weight: 600;
-}
-
-/* Badge ตัวเลข */
-.summary-badge {
-  font-size: 20px;
-  padding: 8px 14px;
-}
-
-/* หัวข้อปฏิทิน */
-.calendar-header.large-title {
-  font-size: 28px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* ตัวเลขวันในปฏิทิน */
-.react-calendar {
-  font-size: 20px; /* จากปกติ ~14px */
-}
-
-/* วัน (1,2,3,...) */
-.react-calendar__tile {
-  padding: 14px 6px;
-  font-size: 20px;
-}
-
-/* ชื่อวัน (จ,อ,พ...) */
-.react-calendar__month-view__weekdays {
-  font-size: 18px;
-}
-
-/* วันที่ถูกเลือก */
-.react-calendar__tile--active {
-  font-size: 22px;
-  font-weight: bold;
-}
-
-.large-btn-text {
-  font-size: 22px;
-  font-weight: 600;
-}
-
 .calendar-center {
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* ตัวปฏิทิน */
+.react-calendar {
+  width: 100%;
+  max-width: 360px; /* ไม่ใหญ่เกินบนแท็บเล็ต */
+  border: none;
+  font-size: 18px;
+}
+
+.welcome-text {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.large-title {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  height: 90px;
+  background: #fff0f6;
+  border-top: 2px solid #f7c1d9;
+
+  z-index: 1000;
+}
+
+.bottom-nav-btn {
+  flex: 1;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 6px;
+  color: #c2185b;
+}
+
+.bottom-nav-btn ion-icon {
+  font-size: 28px;
+}
+
+.bottom-nav-btn span {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.bottom-nav-btn.active {
+  background: #ffd6e8;
+  color: #e91e63;
 }
