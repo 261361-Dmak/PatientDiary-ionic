@@ -17,9 +17,10 @@ const Report: React.FC = () => {
         {/* ===== Mood Flow ===== */}
         <MoodFlow />
 
+        <div className="report-section-divider" />
+
         {/* ===== Mood Bar ===== */}
         <MoodBar />
-        
       </IonContent>
 
       <DiaryNavBar />

@@ -1,13 +1,21 @@
 .report-content {
+  --background: #fff5f7;
   padding: 16px;
-  background: #1e1e1e;
-  color: #fff;
+  color: #333;
 }
 
 .report-title {
   text-align: center;
-  margin-bottom: 12px;
-  font-weight: 600;
+  margin-bottom: 24px;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #e91e63;
+}
+
+/* ===== Section Separator ===== */
+.report-section-divider {
+  height: 20px;
+  background: transparent;
 }
 
 /* ===== Tabs ===== */
@@ -25,7 +33,7 @@
 
 .report-tabs .active {
   color: black;
-  border-bottom: 2px solid #FF70C1;
+  border-bottom: 2px solid #ff70c1;
   padding-bottom: 4px;
 }
 

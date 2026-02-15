@@ -1,0 +1,157 @@
+/* ===== Mood Bar Card ===== */
+.mood-bar-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 22px 20px 18px;
+  color: #333;
+  box-shadow: 0 4px 16px rgba(233, 30, 99, 0.08);
+  border: 1px solid #fce4ec;
+  margin-bottom: 24px;
+}
+
+.mood-bar-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.mood-bar-head h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #e91e63;
+}
+
+.mood-bar-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.mood-bar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.mood-emoji {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  filter: grayscale(1) opacity(0.45);
+  border: 2px solid #e0e0e0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.mood-emoji:hover {
+  filter: grayscale(0.3) opacity(0.7);
+  transform: scale(1.05);
+  border-color: #f48fb1;
+}
+
+.mood-emoji:active {
+  transform: scale(0.92);
+}
+
+.mood-emoji.active {
+  background: linear-gradient(135deg, #fff9c4 0%, #ffe0b2 100%);
+  filter: none;
+  border-color: #ffb74d;
+  box-shadow: 0 3px 12px rgba(255, 183, 77, 0.3);
+  transform: scale(1.08);
+}
+
+.mood-emoji-label {
+  font-size: 0.65rem;
+  color: #aaa;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.mood-emoji-label.active {
+  color: #e91e63;
+  font-weight: 600;
+}
+
+/* ===== Percent Badges ===== */
+.mood-percent {
+  min-width: 46px;
+  text-align: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #f5f5f5;
+  color: #bbb;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border: 1px solid #eee;
+  transition: all 0.3s ease;
+}
+
+.mood-percent.active {
+  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+  color: #e91e63;
+  border-color: #f48fb1;
+  box-shadow: 0 2px 8px rgba(233, 30, 99, 0.12);
+}
+
+/* ===== Total Progress Bar ===== */
+.mood-total-track {
+  width: 100%;
+  height: 14px;
+  border-radius: 999px;
+  background: #f5f5f5;
+  overflow: hidden;
+  border: 1px solid #eee;
+  position: relative;
+}
+
+.mood-total-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f8bbd0 0%, #e91e63 100%);
+  transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.mood-total-fill::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  right: 6px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 360px) {
+  .mood-emoji {
+    width: 44px;
+    height: 44px;
+    font-size: 1.45rem;
+  }
+
+  .mood-percent {
+    min-width: 40px;
+    font-size: 0.68rem;
+  }
+
+  .mood-total-track {
+    height: 12px;
+  }
+}
