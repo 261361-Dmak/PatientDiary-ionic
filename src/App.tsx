@@ -17,7 +17,7 @@ import DoctorCalendar from './pages/appointment/DoctorCalendar';
 import DoctorSlotManager from './pages/appointment/DoctorSlotManager';
 import DoctorAppointmentList from './pages/appointment/DoctorAppointmentList';
 import DoctorAppointmentDetail from './pages/appointment/DoctorAppointmentDetail';
-import DiaryCalender from './pages/diary/DiaryCalender';
+import Calender from './pages/diary/Calender';
 import Diary from './pages/diary/Diary';
 import History from './pages/diary/History';
 import Report from './pages/diary/Report';
@@ -48,8 +48,8 @@ const App: React.FC = () => (
         <Route exact path="/dashboard">
           <Dashboard />
         </Route>
-        <Route exact path="/diarycalender">
-          <DiaryCalender />
+        <Route exact path="/calender">
+          <Calender />
         </Route>
         <Route exact path="/diary">
           <Diary />

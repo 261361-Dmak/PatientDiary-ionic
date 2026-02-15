@@ -14,8 +14,8 @@ const DiaryNavBar: React.FC = () => {
       <IonButtons slot="primary" className="bottom-nav-group">
         <IonButton
           fill="clear"
-          routerLink="/diarycalender"
-          className={isActive("/diarycalender") ? "active" : ""}
+          routerLink="/calender"
+          className={isActive("/calender") ? "active" : ""}
         >
           <IonIcon icon={calendar} />
           <IonLabel>ปฏิทิน</IonLabel>

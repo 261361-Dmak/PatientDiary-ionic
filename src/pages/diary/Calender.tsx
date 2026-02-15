@@ -26,11 +26,12 @@ import {
 import { useHistory } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "./DiaryCalender.css";
+import "./Calender.css";
 import DiaryNavBar from "../../components/DiaryNavBar";
 import DiaryHeader from "../../components/DiaryHeader";
+import DiaryCalender from "../../components/DiaryCalender";
 
-const DiaryCalender: React.FC = () => {
+const Calender: React.FC = () => {
   const history = useHistory();
   const [value, setValue] = useState<Date>(new Date());
 
@@ -68,18 +69,7 @@ const DiaryCalender: React.FC = () => {
         <h2 className="welcome-text large-title">สวัสดีวันจันทร์</h2>
 
         {/* Calendar Card */}
-        <IonCard className="flex-center">
-          <IonCardContent>
-            <div className="calendar-header large-title">
-              <IonIcon icon={calendar} />
-              <span>ปฏิทิน</span>
-            </div>
-
-            <div className="calendar-center">
-              <Calendar locale="th-TH" value={value} onClickDay={onDateClick} />
-            </div>
-          </IonCardContent>
-        </IonCard>
+        <DiaryCalender />
       </IonContent>
 
       {/* ===== Bottom Navigation ===== */}
@@ -88,4 +78,4 @@ const DiaryCalender: React.FC = () => {
   );
 };
 
-export default DiaryCalender;
+export default Calender;

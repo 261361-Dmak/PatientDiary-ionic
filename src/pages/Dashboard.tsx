@@ -39,7 +39,7 @@ const Dashboard: React.FC = () => {
 
       <IonContent className="ion-padding dashboard-content">
         <div className="button-list">
-          <IonButton routerLink='/diarycalender' expand="block" className="dash-button">
+          <IonButton routerLink='/calender' expand="block" className="dash-button">
             <IonIcon slot="start" icon={book} />
             บันทึก
           </IonButton>
