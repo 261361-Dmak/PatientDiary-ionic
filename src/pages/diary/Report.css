@@ -262,7 +262,7 @@
 
 /* ===== Date Picker Modal ===== */
 ion-modal.date-picker-modal-wrapper {
-  --background: rgba(233, 30, 99, 0.1);
+  --background: rgba(0, 0, 0, 0.4);
 }
 
 .date-picker-modal {
