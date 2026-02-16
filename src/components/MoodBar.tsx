@@ -1,75 +1,33 @@
 import React from "react";
+import type { MoodBarItem } from "../utils/moodUtils";
 import "./MoodBar.css";
 
-export interface MoodBarRecord {
-  happiness: number | null;
-}
-
-export interface MoodBarItem {
-  score: number;
-  emoji: string;
-  label: string;
-  percent: number;
-  active?: boolean;
-}
-
-export interface MoodBarProps {
+interface MoodBarProps {
   items?: MoodBarItem[];
   title?: string;
 }
 
-const MOOD_CATALOG: Array<Omit<MoodBarItem, "percent">> = [
-  { score: 5, emoji: "😀", label: "ดีมาก" },
-  { score: 4, emoji: "🙂", label: "ดี" },
-  { score: 3, emoji: "😐", label: "เฉยๆ" },
-  { score: 2, emoji: "🙁", label: "ไม่ดี" },
-  { score: 1, emoji: "😞", label: "แย่" },
-];
+const TONE_CLS = ["", "tone-1", "tone-2", "tone-3", "tone-4", "tone-5"];
 
-const fallbackItems: MoodBarItem[] = MOOD_CATALOG.map((mood, idx) => ({
-  ...mood,
-  percent: idx === 0 ? 100 : 0,
-  active: idx === 0,
-}));
+const MoodBar: React.FC<MoodBarProps> = ({
+  items = [],
+  title = "Mood Bar",
+}) => {
+  const summary = items.length ? items : [];
+  if (!summary.length) return null;
 
-export const mapRecordsToMoodBarItems = (
-  records: MoodBarRecord[],
-): MoodBarItem[] => {
-  const scores = records
-    .map((record) => record.happiness)
-    .filter((score): score is number => score !== null && score >= 1 && score <= 5);
-
-  if (scores.length === 0) return fallbackItems;
-
-  const total = scores.length;
-  return MOOD_CATALOG.map((mood) => {
-    const count = scores.filter((score) => score === mood.score).length;
-    return {
-      ...mood,
-      percent: Math.round((count / total) * 100),
-      active: false,
-    };
-  });
-};
-
-const MoodBar: React.FC<MoodBarProps> = ({ items, title = "Mood Bar" }) => {
-  const summary = items && items.length > 0 ? items : fallbackItems;
-  const autoActiveScore = summary.reduce(
-    (best, item) => (item.percent > best.percent ? item : best),
+  const topScore = summary.reduce(
+    (best, it) => (it.percent > best.percent ? it : best),
     summary[0],
   ).score;
-
-  const displaySummary = summary.map((item) => ({
-    ...item,
-    active: item.active ?? item.score === autoActiveScore,
+  const display = summary.map((it) => ({
+    ...it,
+    active: it.active ?? it.score === topScore,
   }));
 
-  const totalPercent = displaySummary.reduce((sum, item) => sum + item.percent, 0) || 1;
-  const weightedTotal = displaySummary.reduce(
-    (sum, item) => sum + item.score * item.percent,
-    0,
-  );
-  const averagePercent = (weightedTotal / totalPercent / 5) * 100;
+  const totalPct = display.reduce((s, it) => s + it.percent, 0) || 1;
+  const weighted = display.reduce((s, it) => s + it.score * it.percent, 0);
+  const avgPct = (weighted / totalPct / 5) * 100;
 
   return (
     <section className="mood-bar-card">
@@ -78,26 +36,31 @@ const MoodBar: React.FC<MoodBarProps> = ({ items, title = "Mood Bar" }) => {
       </div>
 
       <div className="mood-bar-grid">
-        {displaySummary.map((item) => (
-          <div key={item.score} className="mood-bar-item">
-            <div className={`mood-emoji ${item.active ? "active" : ""}`}>
-              {item.emoji}
+        {display.map(({ score, emoji, label, percent, active }) => (
+          <div key={score} className="mood-bar-item">
+            <div
+              className={`mood-emoji ${TONE_CLS[score]} ${active ? "active" : ""}`}
+            >
+              {emoji}
             </div>
-            <span className={`mood-emoji-label ${item.active ? "active" : ""}`}>
-              {item.label}
+            <span className={`mood-emoji-label ${active ? "active" : ""}`}>
+              {label}
             </span>
-            <span className={`mood-percent ${item.active ? "active" : ""}`}>
-              {item.percent}%
+            <span className={`mood-percent ${active ? "active" : ""}`}>
+              {percent}%
             </span>
           </div>
         ))}
       </div>
 
-      <div className="mood-total-track">
-        <div
-          className="mood-total-fill"
-          style={{ width: `${averagePercent}%` }}
-        />
+      <div className="mood-bar-progress-section">
+        <div className="mood-progress-label">
+          <span className="progress-text">ความสุขโดยรวม</span>
+          <span className="progress-value">{Math.round(avgPct)}%</span>
+        </div>
+        <div className="mood-total-track" aria-label="Overall mood level">
+          <div className="mood-total-fill" style={{ width: `${avgPct}%` }} />
+        </div>
       </div>
     </section>
   );

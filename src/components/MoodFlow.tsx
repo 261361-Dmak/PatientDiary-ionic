@@ -1,154 +1,246 @@
 import React, { useMemo } from "react";
+import {
+  MoodFlowPoint,
+  MOOD_EMOJIS,
+  calcAverage,
+  getMoodEmoji,
+} from "../utils/moodUtils";
 import "./MoodFlow.css";
 
-export interface MoodFlowPoint {
-  dateLabel: string;
-  moodLevel: number | null;
-}
-
-export interface MoodFlowRecord {
-  diary_date: string;
-  happiness: number | null;
-}
-
-export interface MoodFlowProps {
+interface MoodFlowProps {
   points?: MoodFlowPoint[];
   title?: string;
 }
 
-const DEFAULT_DATE_TICKS = [
-  "2/1",
-  "2/6",
-  "2/11",
-  "2/16",
-  "2/21",
-  "2/26",
-  "3/1",
-];
-const MOOD_SCALE = [
-  { color: "#ffcc02", emoji: "😀" },
-  { color: "#8bc34a", emoji: "🙂" },
-  { color: "#4caf50", emoji: "😐" },
-  { color: "#2e7d32", emoji: "🙁" },
-  { color: "#90a4ae", emoji: "😞" },
-];
+/* ── chart config ── */
+const PAD_X = 16;
+const CHART_H = 140;
+const PAD_Y = 14;
 
-const formatDateTick = (dateString: string): string => {
-  const date = new Date(dateString);
-  if (Number.isNaN(date.getTime())) return dateString;
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  return `${month}/${day}`;
-};
-
-const levelToTopPercent = (level: number): string =>
-  `${((5 - Math.max(1, Math.min(5, level))) / 4) * 100}%`;
-
-export const mapRecordsToMoodFlowPoints = (
-  records: MoodFlowRecord[],
-): MoodFlowPoint[] => {
-  return records.map((record) => ({
-    dateLabel: formatDateTick(record.diary_date),
-    moodLevel: record.happiness,
-  }));
-};
-
-const fallbackPoints: MoodFlowPoint[] = DEFAULT_DATE_TICKS.map(
-  (dateLabel, idx) => ({
-    dateLabel,
-    moodLevel: idx === 1 ? 3 : idx === 3 ? 4 : idx === 5 ? 2 : null,
-  }),
-);
-
-const calcAverage = (points: MoodFlowPoint[]): number | null => {
-  const validLevels = points
-    .map((point) => point.moodLevel)
-    .filter((level): level is number => level !== null);
-  if (validLevels.length === 0) return null;
-  return (
-    validLevels.reduce((sum, level) => sum + level, 0) / validLevels.length
-  );
-};
+const clamp = (v: number) => Math.max(1, Math.min(5, v));
+const toY = (level: number) =>
+  CHART_H - PAD_Y - ((clamp(level) - 1) / 4) * (CHART_H - PAD_Y * 2);
 
 type Trend = "up" | "same" | "down";
-
-const computeTrend = (points: MoodFlowPoint[]): Trend => {
-  const middle = Math.ceil(points.length / 2);
-  const firstHalfAvg = calcAverage(points.slice(0, middle));
-  const secondHalfAvg = calcAverage(points.slice(middle));
-  if (firstHalfAvg === null || secondHalfAvg === null) return "same";
-
-  const diff = secondHalfAvg - firstHalfAvg;
-  if (diff > 0.3) return "up";
-  if (diff < -0.3) return "down";
-  return "same";
-};
-
-const trendInfo: Record<Trend, { icon: string; label: string; cls: string }> = {
+const TREND: Record<Trend, { icon: string; label: string; cls: string }> = {
   up: { icon: "↑", label: "ดีขึ้น", cls: "trend-up" },
   same: { icon: "→", label: "คงที่", cls: "trend-same" },
   down: { icon: "↓", label: "แย่ลง", cls: "trend-down" },
 };
 
-const getMoodEmoji = (avg: number | null): string => {
-  if (avg === null) return "—";
-  if (avg >= 4.5) return "😀";
-  if (avg >= 3.5) return "🙂";
-  if (avg >= 2.5) return "😐";
-  if (avg >= 1.5) return "🙁";
-  return "😞";
+const computeTrend = (pts: MoodFlowPoint[]): Trend => {
+  const mid = Math.ceil(pts.length / 2);
+  const a = calcAverage(pts.slice(0, mid).map((p) => p.moodLevel));
+  const b = calcAverage(pts.slice(mid).map((p) => p.moodLevel));
+  if (a === null || b === null) return "same";
+  const d = b - a;
+  return d > 0.3 ? "up" : d < -0.3 ? "down" : "same";
 };
 
+/* ── component ── */
 const MoodFlow: React.FC<MoodFlowProps> = ({ points, title = "Mood Flow" }) => {
-  const displayPoints = points && points.length > 0 ? points : fallbackPoints;
-  const { avg, trend } = useMemo(
-    () => ({
-      avg: calcAverage(displayPoints),
-      trend: computeTrend(displayPoints),
-    }),
-    [displayPoints],
+  const pts = useMemo(() => (points?.length ? points : []), [points]);
+  const avg = useMemo(() => calcAverage(pts.map((p) => p.moodLevel)), [pts]);
+  const trend = useMemo(() => computeTrend(pts), [pts]);
+
+  // Adjust spacing based on data type
+  // 12 points = annual (months), 28-31 = monthly (days)
+  const stepX = pts.length === 12 ? 50 : 40;
+  const chartW = Math.max(300, PAD_X * 2 + (pts.length - 1) * stepX);
+
+  const positioned = useMemo(
+    () =>
+      pts.map((p, i) => ({
+        ...p,
+        x: PAD_X + i * stepX,
+        y: toY(p.moodLevel ?? avg ?? 3),
+        hasData: p.moodLevel !== null,
+      })),
+    [pts, avg, stepX],
   );
 
-  const t = trendInfo[trend];
+  // build Bézier curve + area fill (skip null points)
+  const { pathD, areaD } = useMemo(() => {
+    if (!positioned.length) return { pathD: "", areaD: "" };
+
+    // Helper to build path for a segment of points
+    const buildSegmentPath = (segment: typeof positioned): string => {
+      if (segment.length === 0) return "";
+      const first = segment[0];
+      let d = `M ${first.x} ${first.y}`;
+      for (let i = 1; i < segment.length; i++) {
+        const prev = segment[i - 1];
+        const cur = segment[i];
+        const cx = (prev.x + cur.x) / 2;
+        d += ` C ${cx} ${prev.y}, ${cx} ${cur.y}, ${cur.x} ${cur.y}`;
+      }
+      return d;
+    };
+
+    const pathSegments: string[] = [];
+    const areaSegments: string[] = [];
+    let currentSegment: typeof positioned = [];
+
+    for (let i = 0; i < positioned.length; i++) {
+      const p = positioned[i];
+      if (p.hasData) {
+        currentSegment.push(p);
+      } else {
+        // End current segment when null is encountered
+        if (currentSegment.length > 0) {
+          const segPath = buildSegmentPath(currentSegment);
+          pathSegments.push(segPath);
+          if (currentSegment.length > 0) {
+            const first = currentSegment[0];
+            const last = currentSegment[currentSegment.length - 1];
+            areaSegments.push(
+              `${segPath} L ${last.x} ${CHART_H} L ${first.x} ${CHART_H} Z`,
+            );
+          }
+          currentSegment = [];
+        }
+      }
+    }
+
+    // Handle remaining segment
+    if (currentSegment.length > 0) {
+      const segPath = buildSegmentPath(currentSegment);
+      pathSegments.push(segPath);
+      if (currentSegment.length > 0) {
+        const first = currentSegment[0];
+        const last = currentSegment[currentSegment.length - 1];
+        areaSegments.push(
+          `${segPath} L ${last.x} ${CHART_H} L ${first.x} ${CHART_H} Z`,
+        );
+      }
+    }
+
+    return {
+      pathD: pathSegments.join(" "),
+      areaD: areaSegments.join(" "),
+    };
+  }, [positioned]);
+
+  if (!pts.length) {
+    return (
+      <section className="mood-flow-card">
+        <div className="mood-flow-head">
+          <h2>{title}</h2>
+        </div>
+        <div className="mood-flow-empty">
+          <span className="mood-flow-empty-icon">📈</span>
+          <p>ยังไม่มีข้อมูลในช่วงเวลานี้</p>
+        </div>
+      </section>
+    );
+  }
+
+  const t = TREND[trend];
 
   return (
     <section className="mood-flow-card">
       <div className="mood-flow-head">
         <h2>{title}</h2>
+        <span className="mood-flow-count">
+          {pts.length === 12 ? "12 เดือน" : `${pts.length} วัน`}
+        </span>
       </div>
 
       <div className="mood-flow-body">
-        <div className="mood-flow-scale">
-          {MOOD_SCALE.map((item, idx) => (
-            <span
-              key={`${item.color}-${idx}`}
-              className="mood-scale-dot"
-              style={{ backgroundColor: item.color }}
-              title={item.emoji}
-            />
+        <div className="mood-flow-y-axis">
+          {[5, 4, 3, 2, 1].map((lv) => (
+            <span key={lv} className="mood-flow-y-label">
+              {MOOD_EMOJIS[lv]}
+            </span>
           ))}
         </div>
 
-        <div className="mood-flow-plot">
-          {displayPoints.map((point) => (
-            <div key={point.dateLabel} className="mood-flow-col">
-              <div className="mood-flow-line">
-                {point.moodLevel !== null && (
-                  <span
-                    className="mood-flow-point"
-                    style={{ top: levelToTopPercent(point.moodLevel) }}
-                  />
-                )}
-              </div>
-              <span className="mood-flow-day">{point.dateLabel}</span>
+        <div className="mood-flow-scroll">
+          <div className="mood-flow-canvas" style={{ width: chartW }}>
+            <svg
+              className="mood-flow-svg"
+              viewBox={`0 0 ${chartW} ${CHART_H}`}
+              preserveAspectRatio="xMidYMid meet"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#e91e63" />
+                  <stop offset="100%" stopColor="#f06292" />
+                </linearGradient>
+                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#f06292" stopOpacity="0.3" />
+                  <stop offset="100%" stopColor="#fce4ec" stopOpacity="0.05" />
+                </linearGradient>
+              </defs>
+
+              {[1, 2, 3, 4, 5].map((lv) => (
+                <line
+                  key={lv}
+                  x1={0}
+                  y1={toY(lv)}
+                  x2={chartW}
+                  y2={toY(lv)}
+                  className="mood-flow-gridline"
+                />
+              ))}
+              {positioned.map((p) => (
+                <line
+                  key={`v${p.x}`}
+                  x1={p.x}
+                  y1={0}
+                  x2={p.x}
+                  y2={CHART_H}
+                  className="mood-flow-gridline-v"
+                />
+              ))}
+
+              <path d={areaD} fill="url(#areaGrad)" />
+              <path
+                d={pathD}
+                className="mood-flow-path"
+                stroke="url(#lineGrad)"
+              />
+
+              {positioned
+                .filter((p) => p.hasData)
+                .map((p) => (
+                  <g key={`p${p.x}`}>
+                    <circle
+                      cx={p.x}
+                      cy={p.y}
+                      r={5}
+                      className="mood-flow-point-ring"
+                    />
+                    <circle
+                      cx={p.x}
+                      cy={p.y}
+                      r={3.5}
+                      className="mood-flow-point"
+                    />
+                  </g>
+                ))}
+            </svg>
+
+            <div
+              className="mood-flow-labels"
+              style={{ paddingLeft: PAD_X, paddingRight: PAD_X }}
+            >
+              {pts.map((p, i) => (
+                <span
+                  key={i}
+                  className="mood-flow-day"
+                  style={{ width: stepX, textAlign: "center" }}
+                >
+                  {p.dateLabel}
+                </span>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
 
-      {/* ---- Stats ---- */}
       <div className="mood-stats-section">
-        <h3 className="mood-stats-title">Mood Trend</h3>
         <div className="mood-stats-row">
           <div className="mood-stat-box">
             <span className="mood-stat-emoji">{getMoodEmoji(avg)}</span>
@@ -163,9 +255,7 @@ const MoodFlow: React.FC<MoodFlowProps> = ({ points, title = "Mood Flow" }) => {
           <div className={`mood-stat-box ${t.cls}`}>
             <span className="mood-stat-icon">{t.icon}</span>
             <div className="mood-stat-detail">
-              <span className="mood-stat-label">
-                Mood Trend (7 วันล่าสุด เทียบกับ 7 วันก่อนหน้า)
-              </span>
+              <span className="mood-stat-label">แนวโน้ม</span>
               <span className="mood-stat-value">{t.label}</span>
             </div>
           </div>
