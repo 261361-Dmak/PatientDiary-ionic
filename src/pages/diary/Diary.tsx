@@ -310,7 +310,7 @@ const Diary: React.FC = () => {
             text: "ตกลง",
             handler: () => {
               setShowSuccess(false);
-              history.push("/diarycalender");
+              history.push("/calender");
             },
           },
         ]}
