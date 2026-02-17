@@ -12,6 +12,7 @@ import { supabase } from "../../supabaseClient";
 import DiaryHeader from "../../components/DiaryHeader";
 import { cloudUpload } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
+import DiaryNavBar from "../../components/DiaryNavBar";
 
 const foodOptions = [
   { id: 1, name: "ข้าวผัด", img: "/assets/Diary/foods/01.jpg" },
@@ -299,6 +300,9 @@ const Diary: React.FC = () => {
             </div>
           </main>
         </div>
+      
+      {/* ===== Bottom Navigation ===== */}
+      <DiaryNavBar />
       </IonContent>
 
       <IonAlert
