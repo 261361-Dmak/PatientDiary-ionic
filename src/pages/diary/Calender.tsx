@@ -1,30 +1,7 @@
 import React, { useState } from "react";
-import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonContent,
-  IonIcon,
-  IonCard,
-  IonCardContent,
-  IonButton,
-  IonBackButton,
-  IonButtons,
-  IonLabel,
-} from "@ionic/react";
-import {
-  addCircle,
-  book,
-  calendar,
-  calendarNumber,
-  calendarOutline,
-  call,
-  statsChart,
-  timer,
-  today,
-} from "ionicons/icons";
+import { IonPage, IonContent } from "@ionic/react";
+
 import { useHistory } from "react-router-dom";
-import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./Calender.css";
 import DiaryNavBar from "../../components/DiaryNavBar";
