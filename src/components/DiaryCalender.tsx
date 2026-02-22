@@ -100,13 +100,13 @@ const DiaryCalender: React.FC = () => {
           </h2>
 
           <div className="week-header">
-            <span>Sun</span>
-            <span>Mon</span>
-            <span>Tue</span>
-            <span>Wed</span>
-            <span>Thu</span>
-            <span>Fri</span>
-            <span>Sat</span>
+            <span>อา.</span>
+            <span>จ.</span>
+            <span>อ.</span>
+            <span>พ.</span>
+            <span>พฤ.</span>
+            <span>ศ.</span>
+            <span>ส.</span>
           </div>
 
           <div className="calendar-grid">{renderDays()}</div>

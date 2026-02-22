@@ -24,7 +24,7 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
-  font-size: 13px;
+  font-size: 15px;
   color: #888;
   margin-bottom: 14px;
 }

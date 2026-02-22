@@ -8,6 +8,7 @@
   align-items: center;
   gap: 12px;
   font-weight: bold;
+  
 }
 
 .case-header ion-icon {
@@ -17,4 +18,10 @@
 
 .case-body p {
   margin: 6px 0;
+  font-size: 16px;  
+}
+
+.case-header h3 {
+  font-size: 18px;   /* ปรับขนาดตรงนี้ */
+  margin: 0;
 }
