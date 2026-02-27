@@ -106,7 +106,7 @@ const Report: React.FC = () => {
     <IonPage>
       <DiaryHeader />
       <IonContent className="report-content">
-        <h1 className="report-title">📊 รายงานอารมณ์</h1>
+        <h1 className="report-title"> รายงานอารมณ์</h1>
 
         <div className="report-mode-tabs">
           {(["monthly", "annual"] as const).map((mode) => (
