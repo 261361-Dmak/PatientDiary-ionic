@@ -21,6 +21,7 @@ import Calender from './pages/diary/Calender';
 import Diary from './pages/diary/Diary';
 import History from './pages/diary/History';
 import Report from './pages/diary/Report';
+import NewDashboard from './pages/NewDashboard';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -104,6 +105,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/">
           <Redirect to="/home" />
+        </Route>
+        <Route exact path="/newdashboard">
+          <NewDashboard />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
