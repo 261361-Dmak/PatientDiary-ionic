@@ -18,17 +18,19 @@ import {
 
 import { arrowBack, personCircle, swapVerticalOutline, textOutline } from 'ionicons/icons';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { patients } from './patientslist';
+
+import { supabase } from '../../../supabaseClient';
 
 const PatientList: React.FC = () => {
 
   const history = useHistory();
 
+  const [patients, setPatients] = useState<any[]>([]);
+  const [filteredPatients, setFilteredPatients] = useState<any[]>([]);
   const [searchText, setSearchText] = useState("");
   const [sortType, setSortType] = useState("az");
-  const [filteredPatients, setFilteredPatients] = useState(patients);
 
   const goDetail = (id: string) => {
     history.push(`/patient/${id}`);
@@ -36,6 +38,32 @@ const PatientList: React.FC = () => {
 
   const goDashboard = () => {
     history.push("/dashboard");
+  };
+
+  useEffect(() => {
+    fetchPatients();
+  }, []);
+
+  const fetchPatients = async () => {
+
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*');
+
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    const formatted = data.map((p:any) => ({
+      _id: p.id,
+      name: `${p.first_name} ${p.last_name}`,
+      phone: p.phone,
+      image: null
+    }));
+
+    setPatients(formatted);
+    setFilteredPatients(formatted);
   };
 
   const handleSearch = (text: string) => {
@@ -98,7 +126,6 @@ const PatientList: React.FC = () => {
           onIonInput={(e: any) => handleSearch(e.target.value)}
         />
 
-        {/* ปุ่มเรียงข้อมูล */}
         <IonSegment
           value={sortType}
           onIonChange={(e) => changeSort(e.detail.value!)}
@@ -120,7 +147,7 @@ const PatientList: React.FC = () => {
 
           {filteredPatients.map((patient) => (
 
-            <IonItem key={patient._id} className="patient-card">
+            <IonItem key={patient._id}>
 
               <IonAvatar slot="start">
                 {patient.image ? (
