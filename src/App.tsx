@@ -1,37 +1,38 @@
-import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
+import { Redirect, Route } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import DoctorDashboard from "./pages/DoctorDashboard";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
-import Dashboard from "./pages/Dashboard";
-import DrugInventory from "./pages/drug/DrugInventory";
-import DrugDetail from "./pages/drug/DrugDetail";
 import Appointment from "./pages/appointment/Appointment";
 import AppointmentDetail from "./pages/appointment/AppointmentDetail";
-import ReservationPage from "./pages/appointment/ReservationPage";
-import SuccessPage from "./pages/appointment/SuccessPage";
 import AppointmentList from "./pages/appointment/AppointmentList";
-import DoctorDashboard from "./pages/DoctorDashboard";
-import ManageDrugs from "./pages/drug/ManageDrugs";
+import DoctorAppointmentDetail from "./pages/appointment/DoctorAppointmentDetail";
+import DoctorAppointmentList from "./pages/appointment/DoctorAppointmentList";
 import DoctorCalendar from "./pages/appointment/DoctorCalendar";
 import DoctorSlotManager from "./pages/appointment/DoctorSlotManager";
-import DoctorAppointmentList from "./pages/appointment/DoctorAppointmentList";
-import DoctorAppointmentDetail from "./pages/appointment/DoctorAppointmentDetail";
-import DRPatientDetail from "./pages/diary/doctor/DR_PatientDetail";
-import DRDashboard from "./pages/diary/doctor/DR_dashboard";
+import ReservationPage from "./pages/appointment/ReservationPage";
+import SuccessPage from "./pages/appointment/SuccessPage";
 import Calender from "./pages/diary/Calender";
+import DRPatientHistory from "./pages/diary/DRPatientHistory";
 import Diary from "./pages/diary/Diary";
 import History from "./pages/diary/History";
 import Report from "./pages/diary/Report";
-import DRPatientHistory from "./pages/diary/DRPatientHistory";
+import DRPatientDetail from "./pages/diary/doctor/DR_PatientDetail";
+import DRPatientList from "./pages/diary/doctor/DR_PatientList";
+import DRDashboard from "./pages/diary/doctor/DR_dashboard";
+import DrugDetail from "./pages/drug/DrugDetail";
+import DrugInventory from "./pages/drug/DrugInventory";
+import ManageDrugs from "./pages/drug/ManageDrugs";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
 import "@ionic/react/css/normalize.css";
 import "@ionic/react/css/structure.css";
 import "@ionic/react/css/typography.css";
-import "./theme/variables.css";
 import Contact from "./pages/diary/Contact";
+import "./theme/variables.css";
 
 setupIonicReact();
 
@@ -71,6 +72,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/doctor/pain-chart/:patientId">
           <DRDashboard />
+        </Route>
+        <Route exact path="/docter/patient-list">
+          <DRPatientList />
         </Route>
         <Route exact path="/doctor/patient-history">
           <DRPatientHistory />
