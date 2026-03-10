@@ -21,7 +21,7 @@ import History from "./pages/diary/History";
 import Report from "./pages/diary/Report";
 import DRPatientDetail from "./pages/diary/doctor/DR_PatientDetail";
 import DRPatientList from "./pages/diary/doctor/DR_PatientList";
-import DRDashboard from "./pages/diary/doctor/DR_dashboard";
+import DRDashboard from "./pages/diary/doctor/DR_painchart";
 import DrugDetail from "./pages/drug/DrugDetail";
 import DrugInventory from "./pages/drug/DrugInventory";
 import ManageDrugs from "./pages/drug/ManageDrugs";
@@ -73,7 +73,7 @@ const App: React.FC = () => (
         <Route exact path="/doctor/pain-chart/:patientId">
           <DRDashboard />
         </Route>
-        <Route exact path="/docter/patient-list">
+        <Route exact path="/doctor/patient-list">
           <DRPatientList />
         </Route>
         <Route exact path="/doctor/patient-history">

@@ -33,7 +33,7 @@ const PatientList: React.FC = () => {
   const [sortType, setSortType] = useState("az");
 
   const goDetail = (id: string) => {
-    history.push(`/patient/${id}`);
+    history.push(`/doctor/patient-detail/${id}`);
   };
 
   const goDashboard = () => {
@@ -128,7 +128,7 @@ const PatientList: React.FC = () => {
 
         <IonSegment
           value={sortType}
-          onIonChange={(e) => changeSort(e.detail.value!)}
+          onIonChange={(e) => changeSort(e.detail.value as string)}
         >
 
           <IonSegmentButton value="az">

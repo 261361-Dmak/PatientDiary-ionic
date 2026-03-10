@@ -22,7 +22,7 @@ import { calendarOutline } from "ionicons/icons";
 import { useParams } from "react-router-dom";
 import { supabase } from "../../../supabaseClient";
 import { DiaryRecord, THAI_MONTHS } from "../../../utils/moodUtils";
-import "./DR_dashboard.css";
+import "./DR_painchart.css";
 
 type ViewMode = "weekly" | "monthly" | "annual";
 
