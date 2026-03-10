@@ -18,8 +18,9 @@ import {
   checkmarkOutline,
   closeOutline,
   refreshOutline,
+  statsChartOutline,
 } from "ionicons/icons";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { supabase } from "../../../supabaseClient";
 import "./DR_PatientDetail.css";
 
@@ -41,7 +42,8 @@ interface CalendarCell {
 
 type DayStatus = "none" | "good" | "bad";
 
-const SELECT_COLUMNS = "id, diary_date, hobby, symptoms, food, painscore, happiness";
+const SELECT_COLUMNS =
+  "id, diary_date, hobby, symptoms, food, painscore, happiness";
 const THAI_WEEKDAYS = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."] as const;
 const MONTH_PICKER_LABELS = [
   "Jan",
@@ -105,7 +107,9 @@ const normalizeDateKey = (value: string): string => value.split("T")[0];
 
 const getDayStatus = (record?: DiaryRecord): DayStatus => {
   if (!record) return "none";
-  return (record.painscore ?? 0) >= 3 || (record.happiness ?? 3) <= 2 ? "bad" : "good";
+  return (record.painscore ?? 0) >= 3 || (record.happiness ?? 3) <= 2
+    ? "bad"
+    : "good";
 };
 
 const formatThaiMonth = (date: Date): string =>
@@ -157,12 +161,17 @@ const buildCalendarCells = (monthStart: Date): CalendarCell[] => {
 };
 
 const toMapByDate = (records: DiaryRecord[]): Record<string, DiaryRecord> =>
-  records.reduce((acc, record) => {
-    acc[normalizeDateKey(record.diary_date)] = record;
-    return acc;
-  }, {} as Record<string, DiaryRecord>);
+  records.reduce(
+    (acc, record) => {
+      acc[normalizeDateKey(record.diary_date)] = record;
+      return acc;
+    },
+    {} as Record<string, DiaryRecord>,
+  );
 
-const fetchDiaryRecords = async (patientId?: string): Promise<DiaryRecord[]> => {
+const fetchDiaryRecords = async (
+  patientId?: string,
+): Promise<DiaryRecord[]> => {
   if (patientId) {
     const filtered = await supabase
       .from("diary")
@@ -182,9 +191,12 @@ const fetchDiaryRecords = async (patientId?: string): Promise<DiaryRecord[]> => 
 
 const DRPatientDetail: React.FC = () => {
   const { patientId } = useParams<{ patientId?: string }>();
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [errorText, setErrorText] = useState("");
-  const [recordsByDate, setRecordsByDate] = useState<Record<string, DiaryRecord>>({});
+  const [recordsByDate, setRecordsByDate] = useState<
+    Record<string, DiaryRecord>
+  >({});
   const [focusedMonth, setFocusedMonth] = useState(() => {
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), 1);
@@ -211,11 +223,15 @@ const DRPatientDetail: React.FC = () => {
     loadDiaryRecords();
   }, [loadDiaryRecords]);
 
-  const calendarCells = useMemo(() => buildCalendarCells(focusedMonth), [focusedMonth]);
+  const calendarCells = useMemo(
+    () => buildCalendarCells(focusedMonth),
+    [focusedMonth],
+  );
   const selectedRecord = recordsByDate[selectedDateKey];
   const selectedStatus = getDayStatus(selectedRecord);
   const yearOptions = useMemo(
-    () => Array.from({ length: 20 }, (_, i) => new Date().getFullYear() - 10 + i),
+    () =>
+      Array.from({ length: 20 }, (_, i) => new Date().getFullYear() - 10 + i),
     [],
   );
 
@@ -259,7 +275,9 @@ const DRPatientDetail: React.FC = () => {
   }, [selectedRecord]);
 
   const goToMonth = (delta: number) => {
-    setFocusedMonth((prev) => new Date(prev.getFullYear(), prev.getMonth() + delta, 1));
+    setFocusedMonth(
+      (prev) => new Date(prev.getFullYear(), prev.getMonth() + delta, 1),
+    );
   };
 
   const onSelectDay = (cell: CalendarCell) => {
@@ -294,6 +312,21 @@ const DRPatientDetail: React.FC = () => {
             />
           </IonButtons>
           <IonTitle className="dr-page-title">การบันทึก</IonTitle>
+          <IonButtons slot="end">
+            <button
+              className="dr-chart-btn"
+              onClick={() =>
+                history.push(
+                  patientId
+                    ? `/doctor/pain-chart/${patientId}`
+                    : "/doctor/pain-chart",
+                )
+              }
+            >
+              <IonIcon icon={statsChartOutline} />
+              <span>กราฟ</span>
+            </button>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
 
@@ -321,7 +354,10 @@ const DRPatientDetail: React.FC = () => {
                   onClick={openPicker}
                   aria-label="เลือกเดือนและปี"
                 >
-                  <IonIcon icon={calendarOutline} className="dr-month-chip-icon" />
+                  <IonIcon
+                    icon={calendarOutline}
+                    className="dr-month-chip-icon"
+                  />
                   <span>{formatThaiMonth(focusedMonth)}</span>
                 </button>
 
@@ -344,7 +380,8 @@ const DRPatientDetail: React.FC = () => {
               <div className="dr-calendar-grid">
                 {calendarCells.map((cell) => {
                   const status = getDayStatus(recordsByDate[cell.key]);
-                  const icon = status === "good" ? checkmarkOutline : closeOutline;
+                  const icon =
+                    status === "good" ? checkmarkOutline : closeOutline;
                   return (
                     <button
                       key={cell.key}
@@ -415,7 +452,9 @@ const DRPatientDetail: React.FC = () => {
                     <select
                       className="dr-picker-select"
                       value={tempYear + 543}
-                      onChange={(e) => setTempYear(Number(e.target.value) - 543)}
+                      onChange={(e) =>
+                        setTempYear(Number(e.target.value) - 543)
+                      }
                     >
                       {yearOptions.map((year) => (
                         <option key={year} value={year + 543}>
@@ -453,7 +492,9 @@ const DRPatientDetail: React.FC = () => {
                   {STATUS_LABELS[selectedStatus]}
                 </span>
               </div>
-              <p className="dr-detail-date">{formatThaiFullDate(selectedDateKey)}</p>
+              <p className="dr-detail-date">
+                {formatThaiFullDate(selectedDateKey)}
+              </p>
 
               {selectedRecord ? (
                 <div className="dr-detail-grid">
@@ -475,7 +516,9 @@ const DRPatientDetail: React.FC = () => {
               )}
             </section>
 
-            {errorText && <p className="dr-error-text">โหลดข้อมูลไม่สำเร็จ: {errorText}</p>}
+            {errorText && (
+              <p className="dr-error-text">โหลดข้อมูลไม่สำเร็จ: {errorText}</p>
+            )}
           </>
         )}
       </IonContent>

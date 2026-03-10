@@ -7,6 +7,26 @@
   font-weight: 700;
   letter-spacing: 0;
 }
+.dr-chart-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  color: #e91e63;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+.dr-chart-btn:hover {
+  background: rgba(233, 30, 99, 0.08);
+}
+.dr-chart-btn ion-icon {
+  font-size: 1.2rem;
+}
 .dr-page-title {
   color: #173554;
   font-size: 1.25rem;
