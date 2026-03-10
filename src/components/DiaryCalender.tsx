@@ -17,15 +17,15 @@ const DiaryCalender: React.FC = () => {
   const getEmojiFromHappiness = (score: number) => {
     switch (score) {
       case 1:
-        return "😀";
+        return "😞";
       case 2:
-        return "🙂";
+        return "🙁";
       case 3:
         return "😐";
       case 4:
-        return "🙁";
+        return "🙂";
       case 5:
-        return "😞";
+        return "😀";
       default:
         return "";
     }

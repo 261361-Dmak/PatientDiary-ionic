@@ -62,7 +62,7 @@ const fullDate = new Date().toLocaleDateString("th-TH", {
 
 const getToday = () => {
   const d = new Date();
-  return d.toISOString().split("T")[0];
+  return d.toLocaleDateString("sv-SE", { timeZone: "Asia/Bangkok" });
 };
 
 const Diary: React.FC = () => {
@@ -96,31 +96,54 @@ const Diary: React.FC = () => {
   const handleSave = async (e: any) => {
     e.preventDefault();
 
-    const { error } = await supabase.from("diary").insert([
-      {
-        diary_date: getToday(),
-        hobby: selectedHobbies.join(", "),
-        symptoms: symptomText,
-        food: foodResult,
-        painscore: painscore,
-        happiness: happiness,
-        image_url: diary.image_url,
-      },
-    ]);
+    const today = getToday();
 
-    if (error) {
-      alert("Error adding diary " + error.message);
+    // เช็คว่ามี diary วันนี้หรือยัง
+    const { data: existingDiary, error: fetchError } = await supabase
+      .from("diary")
+      .select("*")
+      .eq("diary_date", today)
+      .single();
+
+    if (fetchError && fetchError.code !== "PGRST116") {
+      alert("Error checking diary: " + fetchError.message);
       return;
     }
 
-    setDiary({
-      hobby: "",
-      symptoms: "",
-      food: "",
-      painscore: "",
-      happiness: "",
-      image_url: "",
-    });
+    let result;
+
+    if (existingDiary) {
+      // UPDATE
+      result = await supabase
+        .from("diary")
+        .update({
+          hobby: selectedHobbies.join(", "),
+          symptoms: symptomText,
+          food: foodResult,
+          painscore: painscore,
+          happiness: happiness,
+          image_url: diary.image_url,
+        })
+        .eq("id", existingDiary.id);
+    } else {
+      // INSERT
+      result = await supabase.from("diary").insert([
+        {
+          diary_date: today,
+          hobby: selectedHobbies.join(", "),
+          symptoms: symptomText,
+          food: foodResult,
+          painscore: painscore,
+          happiness: happiness,
+          image_url: diary.image_url,
+        },
+      ]);
+    }
+
+    if (result.error) {
+      alert("Error saving diary " + result.error.message);
+      return;
+    }
 
     setShowSuccess(true);
   };
@@ -300,9 +323,9 @@ const Diary: React.FC = () => {
             </div>
           </main>
         </div>
-      
-      {/* ===== Bottom Navigation ===== */}
-      <DiaryNavBar />
+
+        {/* ===== Bottom Navigation ===== */}
+        <DiaryNavBar />
       </IonContent>
 
       <IonAlert
