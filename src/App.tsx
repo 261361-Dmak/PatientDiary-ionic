@@ -23,7 +23,7 @@ import Calender from "./pages/diary/Calender";
 import Diary from "./pages/diary/Diary";
 import History from "./pages/diary/History";
 import Report from "./pages/diary/Report";
-import DRPatientHistory from './pages/diary/DRPatientHistory';
+import DRPatientHistory from "./pages/diary/DRPatientHistory";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -66,8 +66,20 @@ const App: React.FC = () => (
         <Route exact path="/report">
           <Report />
         </Route>
-        <Route exact path="/DRPatientHistory">
+        <Route exact path="/doctor/pain-chart">
+          <DRDashboard />
+        </Route>
+        <Route exact path="/doctor/pain-chart/:patientId">
+          <DRDashboard />
+        </Route>
+        <Route exact path="/doctor/patient-history">
           <DRPatientHistory />
+        </Route>
+        <Route exact path="/doctor/patient-detail">
+          <DRPatientDetail />
+        </Route>
+        <Route exact path="/doctor/patient-detail/:patientId">
+          <DRPatientDetail />
         </Route>
         <Route exact path="/appointment-detail/:date">
           <AppointmentDetail />
@@ -104,18 +116,6 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/doctor/appointment-detail/:id">
           <DoctorAppointmentDetail />
-        </Route>
-        <Route exact path="/doctor/patient-detail">
-          <DRPatientDetail />
-        </Route>
-        <Route exact path="/doctor/patient-detail/:patientId">
-          <DRPatientDetail />
-        </Route>
-        <Route exact path="/doctor/pain-chart">
-          <DRDashboard />
-        </Route>
-        <Route exact path="/doctor/pain-chart/:patientId">
-          <DRDashboard />
         </Route>
         <Route exact path="/">
           <Redirect to="/home" />

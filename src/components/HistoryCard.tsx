@@ -51,7 +51,6 @@ const painEmoji: Record<number, string> = {
 };
 
 const HistoryCard: React.FC<{ entry: DiaryEntry }> = ({ entry }) => {
-
   const formattedDate = new Date(entry.diary_date).toLocaleDateString("th-TH", {
     weekday: "long",
     year: "numeric",
@@ -86,14 +85,27 @@ const HistoryCard: React.FC<{ entry: DiaryEntry }> = ({ entry }) => {
 
   return (
     <IonCard className="history-card">
-
       <IonCardContent>
-
-        <div className="history-date">
-          📅 {formattedDate}
-        </div>
+        <div className="history-date">📅 {formattedDate}</div>
 
         <div className="history-grid">
+          <div className="history-item">
+            <span className="item-icon big-emoji">
+              {entry.happiness ? happinessEmoji[entry.happiness] : "-"}
+            </span>
+            <div>
+              <div className="item-title">ความสุข</div>
+            </div>
+          </div>
+
+          <div className="history-item">
+            <span className="item-icon big-emoji">
+              {entry.painscore !== null ? painEmoji[entry.painscore] : "-"}
+            </span>
+            <div>
+              <div className="item-title">ความปวด</div>
+            </div>
+          </div>
 
           <div className="history-item">
             <span className="item-icon">🎯</span>
@@ -118,29 +130,8 @@ const HistoryCard: React.FC<{ entry: DiaryEntry }> = ({ entry }) => {
               <div className="item-value">{getFood()}</div>
             </div>
           </div>
-
-          <div className="history-item">
-            <span className="item-icon big-emoji">
-              {entry.happiness ? happinessEmoji[entry.happiness] : "-"}
-            </span>
-            <div>
-              <div className="item-title">ความสุข</div>
-            </div>
-          </div>
-
-          <div className="history-item">
-            <span className="item-icon big-emoji">
-              {entry.painscore !== null ? painEmoji[entry.painscore] : "-"}
-            </span>
-            <div>
-              <div className="item-title">ความปวด</div>
-            </div>
-          </div>
-
         </div>
-
       </IonCardContent>
-
     </IonCard>
   );
 };
