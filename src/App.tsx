@@ -22,6 +22,7 @@ import Report from "./pages/diary/Report";
 import DRPatientDetail from "./pages/diary/doctor/DR_PatientDetail";
 import DRPatientList from "./pages/diary/doctor/DR_PatientList";
 import DRDashboard from "./pages/diary/doctor/DR_painchart";
+import NewDashboard from './pages/NewDashboard';
 import DrugDetail from "./pages/drug/DrugDetail";
 import DrugInventory from "./pages/drug/DrugInventory";
 import ManageDrugs from "./pages/drug/ManageDrugs";
@@ -85,6 +86,9 @@ const App: React.FC = () => (
         <Route exact path="/doctor/patient-detail/:patientId">
           <DRPatientDetail />
         </Route>
+        <Route exact path="/newdashboard">
+          <NewDashboard />
+        </Route>
         <Route exact path="/appointment-detail/:date">
           <AppointmentDetail />
         </Route>
@@ -120,6 +124,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/doctor/appointment-detail/:id">
           <DoctorAppointmentDetail />
+        </Route>
+        <Route exact path="/">
+          <Redirect to="/home" />
         </Route>
         <Route exact path="/">
           <Redirect to="/home" />
