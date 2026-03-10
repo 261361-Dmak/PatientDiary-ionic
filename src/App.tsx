@@ -1,35 +1,37 @@
-import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
-import Signup from './pages/Signup';
-import Dashboard from './pages/Dashboard';
-import DrugInventory from './pages/drug/DrugInventory';
-import DrugDetail from './pages/drug/DrugDetail';
-import Appointment from './pages/appointment/Appointment';
-import AppointmentDetail from './pages/appointment/AppointmentDetail';
-import ReservationPage from './pages/appointment/ReservationPage';
-import SuccessPage from './pages/appointment/SuccessPage';
-import AppointmentList from './pages/appointment/AppointmentList';
-import DoctorDashboard from './pages/DoctorDashboard';
-import ManageDrugs from './pages/drug/ManageDrugs';
-import DoctorCalendar from './pages/appointment/DoctorCalendar';
-import DoctorSlotManager from './pages/appointment/DoctorSlotManager';
-import DoctorAppointmentList from './pages/appointment/DoctorAppointmentList';
-import DoctorAppointmentDetail from './pages/appointment/DoctorAppointmentDetail';
-import Calender from './pages/diary/Calender';
-import Diary from './pages/diary/Diary';
-import History from './pages/diary/History';
-import Report from './pages/diary/Report';
+import { Redirect, Route } from "react-router-dom";
+import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
+import Home from "./pages/Home";
+import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
+import DrugInventory from "./pages/drug/DrugInventory";
+import DrugDetail from "./pages/drug/DrugDetail";
+import Appointment from "./pages/appointment/Appointment";
+import AppointmentDetail from "./pages/appointment/AppointmentDetail";
+import ReservationPage from "./pages/appointment/ReservationPage";
+import SuccessPage from "./pages/appointment/SuccessPage";
+import AppointmentList from "./pages/appointment/AppointmentList";
+import DoctorDashboard from "./pages/DoctorDashboard";
+import ManageDrugs from "./pages/drug/ManageDrugs";
+import DoctorCalendar from "./pages/appointment/DoctorCalendar";
+import DoctorSlotManager from "./pages/appointment/DoctorSlotManager";
+import DoctorAppointmentList from "./pages/appointment/DoctorAppointmentList";
+import DoctorAppointmentDetail from "./pages/appointment/DoctorAppointmentDetail";
+import DRPatientDetail from "./pages/diary/doctor/DR_PatientDetail";
+import DRDashboard from "./pages/diary/doctor/DR_dashboard";
+import Calender from "./pages/diary/Calender";
+import Diary from "./pages/diary/Diary";
+import History from "./pages/diary/History";
+import Report from "./pages/diary/Report";
 import DRPatientHistory from './pages/diary/DRPatientHistory';
 
 /* Core CSS required for Ionic components to work properly */
-import '@ionic/react/css/core.css';
-import '@ionic/react/css/normalize.css';
-import '@ionic/react/css/structure.css';
-import '@ionic/react/css/typography.css';
-import './theme/variables.css';
-import Contact from './pages/diary/Contact';
+import "@ionic/react/css/core.css";
+import "@ionic/react/css/normalize.css";
+import "@ionic/react/css/structure.css";
+import "@ionic/react/css/typography.css";
+import "./theme/variables.css";
+import Contact from "./pages/diary/Contact";
 
 setupIonicReact();
 
@@ -80,7 +82,7 @@ const App: React.FC = () => (
           <DrugInventory />
         </Route>
         <Route exact path="/drug-detail/:id">
-          <DrugDetail /> 
+          <DrugDetail />
         </Route>
         <Route exact path="/appointment-list">
           <AppointmentList />
@@ -103,8 +105,17 @@ const App: React.FC = () => (
         <Route exact path="/doctor/appointment-detail/:id">
           <DoctorAppointmentDetail />
         </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
+        <Route exact path="/doctor/patient-detail">
+          <DRPatientDetail />
+        </Route>
+        <Route exact path="/doctor/patient-detail/:patientId">
+          <DRPatientDetail />
+        </Route>
+        <Route exact path="/doctor/pain-chart">
+          <DRDashboard />
+        </Route>
+        <Route exact path="/doctor/pain-chart/:patientId">
+          <DRDashboard />
         </Route>
         <Route exact path="/">
           <Redirect to="/home" />
