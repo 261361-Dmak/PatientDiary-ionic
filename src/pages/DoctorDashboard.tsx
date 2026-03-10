@@ -3,7 +3,13 @@ import {
   IonContent, IonPage, IonHeader, IonToolbar, 
   IonTitle, IonButton, IonIcon, IonAvatar, IonButtons 
 } from '@ionic/react';
-import { book, calendar, medical, logOutOutline } from 'ionicons/icons';
+import { 
+  book, 
+  calendar, 
+  medical, 
+  logOutOutline,
+  documentText
+} from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import './DoctorDashboard.css';
@@ -59,6 +65,12 @@ const DoctorDashboard: React.FC = () => {
           <IonButton expand="block" className="doctor-main-btn" onClick={() => history.push('/doctor/manage-drugs')}>
             <IonIcon slot="start" icon={medical} />
             จัดการยา
+          </IonButton>
+
+          {/* บันทึกคนไข้ */}
+          <IonButton expand="block" className="doctor-main-btn" onClick={() => history.push('/newdashboard')}>
+            <IonIcon slot="start" icon={documentText} />
+            ดูบันทึกคนไข้
           </IonButton>
 
         </div>

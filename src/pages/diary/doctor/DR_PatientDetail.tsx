@@ -23,6 +23,8 @@ import {
 import { useHistory, useParams } from "react-router-dom";
 import { supabase } from "../../../supabaseClient";
 import "./DR_PatientDetail.css";
+import DoctorNavBar from "../../../components/DR_DiaryNavbar";
+import DR_DiaryHeader from "../../../components/DR_DiaryHeader";
 
 interface DiaryRecord {
   id: number | string;
@@ -305,27 +307,11 @@ const DRPatientDetail: React.FC = () => {
       <IonHeader className="ion-no-border">
         <IonToolbar className="dr-patient-detail-toolbar">
           <IonButtons slot="start">
-            <IonBackButton
-              text="ย้อนกลับ"
-              defaultHref="/doctor-dashboard"
-              className="dr-back-button"
-            />
+            <DR_DiaryHeader />
           </IonButtons>
           <IonTitle className="dr-page-title">การบันทึก</IonTitle>
           <IonButtons slot="end">
-            <button
-              className="dr-chart-btn"
-              onClick={() =>
-                history.push(
-                  patientId
-                    ? `/doctor/pain-chart/${patientId}`
-                    : "/doctor/pain-chart",
-                )
-              }
-            >
-              <IonIcon icon={statsChartOutline} />
-              <span>กราฟ</span>
-            </button>
+            
           </IonButtons>
         </IonToolbar>
       </IonHeader>
@@ -522,6 +508,9 @@ const DRPatientDetail: React.FC = () => {
           </>
         )}
       </IonContent>
+
+      <DoctorNavBar />
+      
     </IonPage>
   );
 };

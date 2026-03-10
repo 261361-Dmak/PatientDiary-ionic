@@ -174,7 +174,7 @@ const NewDashboard: React.FC = () => {
           {/* button */}
           <IonButton
             expand="block"
-            routerLink="/diary"
+            routerLink="/doctor/patient-list"
             className="main-button"
           >
             ดูบันทึกคนไข้วันนี้

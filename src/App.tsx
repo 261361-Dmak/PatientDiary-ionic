@@ -15,7 +15,7 @@ import DoctorSlotManager from "./pages/appointment/DoctorSlotManager";
 import ReservationPage from "./pages/appointment/ReservationPage";
 import SuccessPage from "./pages/appointment/SuccessPage";
 import Calender from "./pages/diary/Calender";
-import DRPatientHistory from "./pages/diary/DRPatientHistory";
+import DRPatientHistory from "./pages/diary/doctor/DRPatientHistory";
 import Diary from "./pages/diary/Diary";
 import History from "./pages/diary/History";
 import Report from "./pages/diary/Report";
@@ -68,10 +68,10 @@ const App: React.FC = () => (
         <Route exact path="/report">
           <Report />
         </Route>
-        <Route exact path="/doctor/pain-chart">
+        <Route exact path="/doctor/patient-chart">
           <DRDashboard />
         </Route>
-        <Route exact path="/doctor/pain-chart/:patientId">
+        <Route exact path="/doctor/patient-chart/:patientId">
           <DRDashboard />
         </Route>
         <Route exact path="/doctor/patient-list">

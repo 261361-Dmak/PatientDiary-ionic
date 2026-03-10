@@ -3,8 +3,9 @@ import { IonPage, IonContent, IonSearchbar } from "@ionic/react";
 import { supabase } from "../../../supabaseClient";
 import "./DRPatientHistory.css";
 import DRHistoryCard, { DRDiaryEntry } from "../../../components/DRHistoryCard";
-import DiaryNavBar from "../../../components/DiaryNavBar";
 import DiaryHeader from "../../../components/DiaryHeader";
+import DoctorNavBar from "../../../components/DR_DiaryNavbar";
+import DR_DiaryHeader from "../../../components/DR_DiaryHeader";
 
 const DRPatientHistory: React.FC = () => {
   const [diaryEntries, setDiaryEntries] = useState<any[]>([]);
@@ -92,7 +93,7 @@ const DRPatientHistory: React.FC = () => {
 
   return (
     <IonPage>
-      <DiaryHeader />
+      <DR_DiaryHeader />
 
       <IonContent
         className="history-content ion-padding"
@@ -144,7 +145,7 @@ const DRPatientHistory: React.FC = () => {
         )}
       </IonContent>
 
-      <DiaryNavBar />
+    <DoctorNavBar />
     </IonPage>
   );
 };

@@ -23,6 +23,8 @@ import { useParams } from "react-router-dom";
 import { supabase } from "../../../supabaseClient";
 import { DiaryRecord, THAI_MONTHS } from "../../../utils/moodUtils";
 import "./DR_painchart.css";
+import DoctorNavBar from "../../../components/DR_DiaryNavbar";
+import DR_DiaryHeader from "../../../components/DR_DiaryHeader";
 
 type ViewMode = "weekly" | "monthly" | "annual";
 
@@ -503,11 +505,7 @@ const DRDashboard: React.FC = () => {
       <IonHeader className="ion-no-border">
         <IonToolbar className="dr-dash-toolbar">
           <IonButtons slot="start">
-            <IonBackButton
-              text="ย้อนกลับ"
-              defaultHref="/doctor-dashboard"
-              className="dr-dash-back"
-            />
+            <DR_DiaryHeader />
           </IonButtons>
           <IonTitle className="dr-dash-title">กราฟความเจ็บปวด</IonTitle>
         </IonToolbar>
@@ -636,6 +634,8 @@ const DRDashboard: React.FC = () => {
           </div>
         </IonModal>
       </IonContent>
+
+      <DoctorNavBar />
     </IonPage>
   );
 };

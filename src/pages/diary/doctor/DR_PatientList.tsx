@@ -107,7 +107,7 @@ const PatientList: React.FC = () => {
         <IonToolbar color="primary">
 
           <IonButtons slot="start">
-            <IonButton onClick={goDashboard}>
+            <IonButton onClick={() => history.goBack()}>
               <IonIcon icon={arrowBack}/>
             </IonButton>
           </IonButtons>
