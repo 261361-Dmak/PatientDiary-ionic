@@ -1,27 +1,94 @@
-.case-card {
-  border-radius: 16px;
-  margin-bottom: 16px;
+.history-card {
+  border-radius: 18px;
+  padding: 8px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
 }
 
-.case-header {
+.history-date {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.history-item {
   display: flex;
   align-items: center;
   gap: 12px;
+
+  background: #f7f7f7;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.item-icon {
+  font-size: 28px;
+}
+
+.item-title {
+  font-size: 18px;
   font-weight: bold;
-  
+  color: #444;
 }
 
-.case-header ion-icon {
-  font-size: 24px;
-  color: #e91e63;
+.item-value {
+  font-size: 17px;
+  color: #333;
 }
 
-.case-body p {
-  margin: 6px 0;
-  font-size: 16px;  
+.big-emoji {
+  font-size: 36px;
 }
 
-.case-header h3 {
-  font-size: 18px;   /* ปรับขนาดตรงนี้ */
-  margin: 0;
+.emoji-item {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+
+  .history-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .history-date {
+    font-size: 20px;
+  }
+
+  .item-title {
+    font-size: 17px;
+  }
+
+  .item-value {
+    font-size: 16px;
+  }
+
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+
+  .history-date {
+    font-size: 18px;
+  }
+
+  .history-item {
+    padding: 12px;
+  }
+
+  .item-icon {
+    font-size: 24px;
+  }
+
+  .big-emoji {
+    font-size: 32px;
+  }
+
 }
