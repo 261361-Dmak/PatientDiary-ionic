@@ -1,27 +1,32 @@
 import {
-    IonAvatar,
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonPage,
-    IonSearchbar,
-    IonSegment,
-    IonSegmentButton,
-    IonTitle,
-    IonToolbar
+  IonAvatar,
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonPage,
+  IonSearchbar,
+  IonSegment,
+  IonSegmentButton,
+  IonLabel,
+  IonTitle,
+  IonToolbar
 } from '@ionic/react';
 
-import { arrowBack, personCircle, swapVerticalOutline, textOutline } from 'ionicons/icons';
+import {
+  arrowBack,
+  personCircle,
+  swapVerticalOutline,
+  textOutline
+} from 'ionicons/icons';
 
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { supabase } from '../../../supabaseClient';
+
+import './DR_PatientList.css';
 
 const PatientList: React.FC = () => {
 
@@ -33,7 +38,11 @@ const PatientList: React.FC = () => {
   const [sortType, setSortType] = useState("az");
 
   const goDetail = (id: string) => {
-    history.push(`/doctor/patient-detail/${id}`);
+    history.push(/doctor/patient-detail/${id});
+  };
+
+  const goDashboard = () => {
+    history.push("/dashboard");
   };
 
   useEffect(() => {
@@ -51,9 +60,9 @@ const PatientList: React.FC = () => {
       return;
     }
 
-    const formatted = data.map((p:any) => ({
+    const formatted = data.map((p: any) => ({
       _id: p.id,
-      name: `${p.first_name} ${p.last_name}`,
+      name: ${p.first_name} ${p.last_name},
       phone: p.phone,
       image: null
     }));
@@ -99,22 +108,20 @@ const PatientList: React.FC = () => {
     <IonPage>
 
       <IonHeader>
-
         <IonToolbar color="primary">
 
           <IonButtons slot="start">
             <IonButton onClick={() => history.goBack()}>
-              <IonIcon icon={arrowBack}/>
+              <IonIcon icon={arrowBack} />
             </IonButton>
           </IonButtons>
 
           <IonTitle>รายชื่อคนไข้</IonTitle>
 
         </IonToolbar>
-
       </IonHeader>
 
-      <IonContent>
+      <IonContent className="patient-bg">
 
         <IonSearchbar
           value={searchText}
@@ -139,38 +146,38 @@ const PatientList: React.FC = () => {
 
         </IonSegment>
 
-        <IonList>
+        {/* Patient Cards */}
 
-          {filteredPatients.map((patient) => (
+        {filteredPatients.map((patient) => (
 
-            <IonItem key={patient._id}>
+          <div
+            key={patient._id}
+            className="patient-card"
+            onClick={() => goDetail(patient._id)}
+          >
 
-              <IonAvatar slot="start">
+            <div className="patient-left">
+
+              <IonAvatar>
                 {patient.image ? (
                   <img src={patient.image} alt="patient" />
                 ) : (
-                  <IonIcon icon={personCircle} style={{ fontSize: "50px" }} />
+                  <IonIcon icon={personCircle} className="patient-icon" />
                 )}
               </IonAvatar>
 
-              <IonLabel>
-                <h2>{patient.name}</h2>
-                <p>{patient.phone}</p>
-              </IonLabel>
+              <div className="patient-info">
+                <div className="patient-name">{patient.name}</div>
+                <div className="patient-phone">{patient.phone}</div>
+              </div>
 
-              <IonButton
-                slot="end"
-                fill="outline"
-                onClick={() => goDetail(patient._id)}
-              >
-                รายละเอียด
-              </IonButton>
+            </div>
 
-            </IonItem>
+            
 
-          ))}
+          </div>
 
-        </IonList>
+        ))}
 
       </IonContent>
 

@@ -363,3 +363,11 @@ textarea::placeholder {
   color: #7a1f4b;
   font-weight: 600;
 }
+
+.preview-img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 10px;
+}

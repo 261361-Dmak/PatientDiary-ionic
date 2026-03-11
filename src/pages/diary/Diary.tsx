@@ -68,13 +68,16 @@ const getToday = () => {
 const Diary: React.FC = () => {
   const [happiness, setHappiness] = useState<number | null>(null);
   const [painscore, setPainScore] = useState<number | null>(null);
-  const [selectedFood, setSelectedFood] = useState<number | null>(null);
+  const [selectedFood, setSelectedFood] = useState<string | null>(null);
   const [extraFood, setExtraFood] = useState("");
   const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]);
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
   const [extraSymptom, setExtraSymptom] = useState("");
   const history = useHistory();
   const [showSuccess, setShowSuccess] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [diary, setDiary] = useState({
     hobby: "",
     symptoms: "",
@@ -93,10 +96,46 @@ const Diary: React.FC = () => {
     selectedSymptoms.filter((s) => s !== "other").join(", ") +
     (extraSymptom ? `, ${extraSymptom}` : "");
 
+  const handleImageSelect = (e: any) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setImageFile(file);
+
+    // preview
+    const preview = URL.createObjectURL(file);
+    setImagePreview(preview);
+  };
+
+  const uploadImage = async () => {
+    if (!imageFile) return null;
+
+    const fileName = `${Date.now()}_${imageFile.name}`;
+
+    const { error } = await supabase.storage
+      .from("diary-img")
+      .upload(fileName, imageFile);
+
+    if (error) {
+      console.error(error);
+      return null;
+    }
+
+    const { data } = supabase.storage.from("diary-img").getPublicUrl(fileName);
+
+    return data.publicUrl;
+  };
+
   const handleSave = async (e: any) => {
     e.preventDefault();
 
     const today = getToday();
+
+    let uploadedImageUrl = imageUrl;
+
+    if (imageFile) {
+      uploadedImageUrl = await uploadImage();
+    }
 
     // เช็คว่ามี diary วันนี้หรือยัง
     const { data: existingDiary, error: fetchError } = await supabase
@@ -122,7 +161,7 @@ const Diary: React.FC = () => {
           food: foodResult,
           painscore: painscore,
           happiness: happiness,
-          image_url: diary.image_url,
+          image_url: uploadedImageUrl,
         })
         .eq("id", existingDiary.id);
     } else {
@@ -135,7 +174,7 @@ const Diary: React.FC = () => {
           food: foodResult,
           painscore: painscore,
           happiness: happiness,
-          image_url: diary.image_url,
+          image_url: uploadedImageUrl,
         },
       ]);
     }
@@ -160,7 +199,9 @@ const Diary: React.FC = () => {
 
             <div className="card">
               {/* Happiness */}
-              <h3>วันนี้เป็นยังไงบ้าง</h3>
+              <h3>
+                วันนี้เป็นยังไงบ้าง <span className="required">*</span>
+              </h3>
 
               <div className="mood-row">
                 {[
@@ -257,10 +298,10 @@ const Diary: React.FC = () => {
                     key={food.id}
                     type="button"
                     className={`food-card ${
-                      selectedFood === food.id ? "active" : ""
+                      selectedFood === food.name ? "active" : ""
                     }`}
                     onClick={() => {
-                      setSelectedFood(food.id);
+                      setSelectedFood(food.name);
                     }}
                   >
                     <img src={food.img} alt={food.name} />
@@ -302,9 +343,31 @@ const Diary: React.FC = () => {
 
               <div className="upload-box">
                 <IonIcon icon={cloudUpload}></IonIcon>
-                <p className="upload-text">คลิกเพื่อเลือกไฟล์</p>
-                <p className="upload-hint">รองรับ JPG, PNG</p>
-                <button className="upload-btn">เลือกรูปภาพ</button>
+
+                {imagePreview ? (
+                  <img src={imagePreview} className="preview-img" />
+                ) : (
+                  <>
+                    <p className="upload-text">คลิกเพื่อเลือกไฟล์</p>
+                    <p className="upload-hint">รองรับ JPG, PNG</p>
+                  </>
+                )}
+
+                <button
+                  type="button"
+                  className="upload-btn"
+                  onClick={() => document.getElementById("imageInput")?.click()}
+                >
+                  เลือกรูปภาพ
+                </button>
+
+                <input
+                  id="imageInput"
+                  type="file"
+                  accept="image/png, image/jpeg"
+                  style={{ display: "none" }}
+                  onChange={handleImageSelect}
+                />
               </div>
 
               {/* ===== Buttons ===== */}
