@@ -9,6 +9,7 @@ export interface DiaryEntry {
   food: string;
   happiness: number;
   painscore: number;
+  image_url: string | null;
 }
 
 const foodOptions = [
@@ -99,6 +100,12 @@ const HistoryCard: React.FC<{ entry: DiaryEntry }> = ({ entry }) => {
     return found ? `${found.icon} ${found.name}` : entry.food;
   };
 
+  const getimage = () => {
+    if (!entry.image_url) return "-";
+
+    return <img src={entry.image_url} alt="Diary" className="history-image" />;
+  };
+
   return (
     <IonCard className="history-card">
       <IonCardContent>
@@ -107,7 +114,7 @@ const HistoryCard: React.FC<{ entry: DiaryEntry }> = ({ entry }) => {
         <div className="history-grid">
           <div className="history-item">
             <span className="item-icon big-emoji">
-              {entry.happiness ? happinessEmoji[entry.happiness] : "-" }
+              {entry.happiness ? happinessEmoji[entry.happiness] : "-"}
             </span>
             <div>
               <div className="item-title">ความสุข</div>
@@ -150,6 +157,14 @@ const HistoryCard: React.FC<{ entry: DiaryEntry }> = ({ entry }) => {
             <div>
               <div className="item-title">อาหาร</div>
               <div className="item-value">{getFood()}</div>
+            </div>
+          </div>
+
+          <div className="history-item">
+            <span className="item-icon">🖼</span>
+            <div>
+              <div className="item-title">รูปภาพ</div>
+              <div className="item-value">{getimage()}</div>
             </div>
           </div>
         </div>

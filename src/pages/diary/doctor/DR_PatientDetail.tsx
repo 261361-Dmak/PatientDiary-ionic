@@ -34,6 +34,7 @@ interface DiaryRecord {
   food: string | number | null;
   painscore: number | null;
   happiness: number | null;
+  image_url: string | null;
 }
 
 interface CalendarCell {
@@ -45,7 +46,7 @@ interface CalendarCell {
 type DayStatus = "none" | "good" | "bad";
 
 const SELECT_COLUMNS =
-  "id, diary_date, hobby, symptoms, food, painscore, happiness";
+  "id, diary_date, hobby, symptoms, food, painscore, happiness, image_url";
 const THAI_WEEKDAYS = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."] as const;
 const MONTH_PICKER_LABELS = [
   "Jan",
@@ -219,6 +220,8 @@ const DRPatientDetail: React.FC = () => {
     try {
       const records = await fetchDiaryRecords(patientId);
       setRecordsByDate(toMapByDate(records));
+
+      console.log("Fetched diary records:", records);
     } catch (error) {
       setErrorText(error instanceof Error ? error.message : "Unknown error");
     } finally {
@@ -276,6 +279,15 @@ const DRPatientDetail: React.FC = () => {
           selectedRecord.happiness === null
             ? "-"
             : `${selectedRecord.happiness} - ${HAPPINESS_LABELS[selectedRecord.happiness] || "-"}`,
+        full: true,
+      },
+      {
+        label: "รูปภาพ",
+        value: selectedRecord.image_url ? (
+          <img src={selectedRecord.image_url} alt="Diary" className="detail-image" />
+        ) : (
+          "ไม่มีรูปภาพ"
+        ),
         full: true,
       },
     ];

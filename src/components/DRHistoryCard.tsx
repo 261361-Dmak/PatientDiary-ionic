@@ -9,6 +9,7 @@ export interface DRDiaryEntry {
   food: string;
   happiness: number;
   painscore: number;
+  image_url: string | null;
 
   profiles?: {
     first_name: string;
@@ -111,6 +112,12 @@ const DRHistoryCard: React.FC<{ entry: DRDiaryEntry }> = ({ entry }) => {
     return found ? `${found.icon} ${found.name}` : entry.food;
   };
 
+  const getimage = () => {
+    if (!entry.image_url) return "-";
+
+    return <img src={entry.image_url} alt="Diary" className="history-image" />;
+  };
+
   return (
     <IonCard className={`patient-history   ${riskLevel}`}>
       <IonCardContent>
@@ -144,7 +151,7 @@ const DRHistoryCard: React.FC<{ entry: DRDiaryEntry }> = ({ entry }) => {
             <div>
               <div className="patient-item-title">ความปวด</div>
               <div className="patient-item-value">
-                  {entry.painscore !== null ? PAIN_LABELS[entry.painscore] : "-"}
+                {entry.painscore !== null ? PAIN_LABELS[entry.painscore] : "-"}
               </div>
             </div>
           </div>
@@ -172,6 +179,14 @@ const DRHistoryCard: React.FC<{ entry: DRDiaryEntry }> = ({ entry }) => {
               <div className="patient-item-value">{getFood()}</div>
             </div>
           </div>
+
+          <div className="patient-history-item">
+            <span className="patient-item-icon">🖼</span>
+            <div>
+              <div className="patient-item-title">รูปภาพ</div>
+              <div className="patient-item-value">{getimage()}</div>
+            </div>
+          </div>
         </div>
       </IonCardContent>
     </IonCard>
@@ -179,18 +194,3 @@ const DRHistoryCard: React.FC<{ entry: DRDiaryEntry }> = ({ entry }) => {
 };
 
 export default DRHistoryCard;
-
-// alter policy "Doctor can view all diaries"
-
-// on "public"."diary"
-
-// to authenticated
-
-// using (
-
-//
-//   (EXISTS ( SELECT 1
-//    FROM profiles
-//   WHERE ((profiles.id = auth.uid()) AND (profiles.role = 'doctor'::text))))
-
-// );

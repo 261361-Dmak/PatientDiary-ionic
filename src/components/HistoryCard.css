@@ -1,7 +1,7 @@
 .history-card {
   border-radius: 18px;
   padding: 8px;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
 }
 
 .history-date {
@@ -51,9 +51,21 @@
   margin-right: 8px;
 }
 
+.food-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.food-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
 /* Tablet */
 @media (max-width: 768px) {
-
   .history-grid {
     grid-template-columns: 1fr;
   }
@@ -69,12 +81,10 @@
   .item-value {
     font-size: 16px;
   }
-
 }
 
 /* Mobile */
 @media (max-width: 480px) {
-
   .history-date {
     font-size: 18px;
   }
@@ -90,5 +100,4 @@
   .big-emoji {
     font-size: 32px;
   }
-
 }
