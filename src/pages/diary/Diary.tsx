@@ -29,7 +29,7 @@ const hobbyOptions = [
   { id: "ออกกำลังกาย", label: "ออกกำลังกาย", icon: "🏋️" },
   { id: "ดูทีวี", label: "ดูทีวี", icon: "📺" },
   { id: "ดูหนัง", label: "ดูหนัง", icon: "🎬" },
-  { id: "เล่นเกม", label: "เล่นเกม", icon: "🎮" },
+  { id: "นั่งสมาธิ", label: "นั่งสมาธิ", icon: "🧘" },
   { id: "อ่านหนังสือ", label: "อ่านหนังสือ", icon: "📖" },
   { id: "เดินเล่น", label: "เดินเล่น", icon: "👟" },
   { id: "ฟังเพลง", label: "ฟังเพลง", icon: "🎧" },
@@ -38,12 +38,12 @@ const hobbyOptions = [
 const symptomOptions = [
   { id: "ปวด", label: "ปวด", icon: "🤕" },
   { id: "บวม", label: "บวม", icon: "🩹" },
-  { id: "เลือดออก", label: "เลือดออก", icon: "🩸" },
+  { id: "ท้องเสีย", label: "ท้องเสีย", icon: "🚽" },
   { id: "มีไข้", label: "มีไข้", icon: "🤒" },
-  { id: "แผล", label: "แผล", icon: "🩹" },
+  { id: "อาเจียน", label: "อาเจียน", icon: "🤢" },
   { id: "ชา", label: "ชา", icon: "😖" },
   { id: "คัน", label: "คัน", icon: "😣" },
-  { id: "อื่น ๆ", label: "อื่น ๆ", icon: "❓" },
+  { id: "อ่อนเพลีย", label: "อ่อนเพลีย", icon: "😴" },
 ];
 const painOptions = [
   { value: 0, label: "ไม่เจ็บ", emoji: "😄", color: "success" },

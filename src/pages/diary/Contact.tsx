@@ -10,9 +10,9 @@ const doctors: Doctor[] = [
     id: 1,
     name: "หมอเดียร์",
     specialty: "Applied Thai Traditional Medicine",
-    phone: "082-152-9499",
+    phone: "065-9689389",
     email: "-",
-    lineId: "-",
+    lineId: "@260kyvuk",
     avatar: "assets/Diary/doctor/doctordeer.jpg",
   },
 ];
