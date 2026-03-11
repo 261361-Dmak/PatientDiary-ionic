@@ -120,7 +120,7 @@ const DoctorDashboard: React.FC = () => {
           <IonButton
             expand="block"
             className="doctor-main-btn"
-            onClick={() => history.push("/newdashboard")}
+            onClick={() => history.push("doctor/newdashboard")}
           >
             <IonIcon slot="start" icon={documentText} />
             ดูบันทึกคนไข้

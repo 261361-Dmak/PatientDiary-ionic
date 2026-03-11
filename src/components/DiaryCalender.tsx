@@ -5,13 +5,26 @@ import { supabase } from "../supabaseClient";
 
 const DiaryCalender: React.FC = () => {
   const [moods, setMoods] = useState<any>({});
-
   const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth();
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
 
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDay = new Date(year, month, 1).getDay();
+
+  const todayStr = today.toLocaleDateString("sv-SE", {
+    timeZone: "Asia/Bangkok",
+  });
+
+  const prevMonth = () => {
+    setCurrentDate(new Date(year, month - 1, 1));
+  };
+
+  const nextMonth = () => {
+    setCurrentDate(new Date(year, month + 1, 1));
+  };
 
   // ⭐ แปลงเลข happiness → emoji
   const getEmojiFromHappiness = (score: number) => {
@@ -58,32 +71,30 @@ const DiaryCalender: React.FC = () => {
   const renderDays = () => {
     const days = [];
 
-    // ช่องว่างก่อนวันแรกของเดือน
-    for (let i = 0; i < firstDay; i++) {
-      days.push(<div key={"empty-" + i}></div>);
-    }
+    // จำนวนช่องทั้งหมด 6 week * 7 day
+    const totalCells = 42;
 
-    // วนวันในเดือน
-    for (let day = 1; day <= daysInMonth; day++) {
-      const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    for (let i = 0; i < totalCells; i++) {
+      const dayNumber = i - firstDay + 1;
+
+      if (dayNumber < 1 || dayNumber > daysInMonth) {
+        days.push(<div key={"empty-" + i}></div>);
+        continue;
+      }
+
+      const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(
+        dayNumber,
+      ).padStart(2, "0")}`;
 
       const emoji = moods[dateStr];
+      const isToday = dateStr === todayStr;
 
       days.push(
-        <div key={day} className="day-wrapper">
-          <div className="circle">
-            {emoji && (
-              <span
-                style={{
-                  fontSize: "30px", // เดิมประมาณ 18px
-                  lineHeight: "1",
-                }}
-              >
-                {emoji}
-              </span>
-            )}
+        <div key={i} className="day-wrapper">
+          <div className={`circle ${isToday ? "today" : ""}`}>
+            {emoji && <span className="emoji">{emoji}</span>}
           </div>
-          <div className="day-number">{day}</div>
+          <div className="day-number">{dayNumber}</div>
         </div>,
       );
     }
@@ -95,9 +106,15 @@ const DiaryCalender: React.FC = () => {
     <IonPage>
       <IonContent fullscreen className="calendar-content">
         <div className="calendar-container">
-          <h2 className="month-title">
-            {today.toLocaleString("default", { month: "long" })} {year}
-          </h2>
+          <div className="month-header">
+            <button onClick={prevMonth}>◀</button>
+
+            <h2 className="month-title">
+              {currentDate.toLocaleString("default", { month: "long" })} {year}
+            </h2>
+
+            <button onClick={nextMonth}>▶</button>
+          </div>
 
           <div className="week-header">
             <span>อา.</span>

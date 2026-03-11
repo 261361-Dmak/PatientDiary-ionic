@@ -3,6 +3,7 @@ import { IonContent, IonPage, IonAvatar, IonButton } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { supabase } from "../../../supabaseClient";
 import "./NewDashboard.css";
+import DR_DiaryHeader from "../../../components/DR_DiaryHeader";
 
 const NewDashboard: React.FC = () => {
   const [todayPatients, setTodayPatients] = useState(0);
@@ -11,26 +12,37 @@ const NewDashboard: React.FC = () => {
 
   const [chartData, setChartData] = useState<any[]>([]);
 
-  const today = new Date().toLocaleDateString("sv-SE");
+  const fullDate = new Date().toLocaleDateString("th-TH", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  const getToday = () => {
+    const d = new Date();
+    return d.toLocaleDateString("sv-SE", { timeZone: "Asia/Bangkok" });
+  };
+
+  const today = getToday();
 
   const loadData = async () => {
-    const { data } = await supabase
-      .from("appointments")
+    const { data: diaries } = await supabase
+      .from("diary")
       .select("*")
-      .eq("appointment_date", today);
+      .eq("diary_date", today);
+    const { data: profiles } = await supabase.from("profiles").select("*");
 
-    if (data) {
-      setTodayPatients(data.length);
-
-      const recordedCount = data.filter(
-        (a) => a.note && a.note !== "EMPTY",
-      ).length;
-
-      const notRecordedCount = data.length - recordedCount;
-
-      setRecorded(recordedCount);
-      setNotRecorded(notRecordedCount);
+    if (profiles) {
+      setTodayPatients(profiles.length);
     }
+
+    const recordedCount = diaries?.length || 0;
+
+    const notRecordedCount = profiles ? profiles.length - recordedCount : 0;
+
+    setRecorded(recordedCount);
+    setNotRecorded(notRecordedCount);
   };
 
   /* โหลดข้อมูล graph 7 วัน */
@@ -77,27 +89,21 @@ const NewDashboard: React.FC = () => {
     loadGraph();
   }, []);
 
+  const max = Math.max(...chartData.map((d) => d.count), 1);
+
   return (
     <IonPage>
       {/* Top Bar */}
-      <div className="top-bar">
-        <div className="doctor-info">
-          <IonAvatar className="avatar">
-            <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-          </IonAvatar>
-
-          <h2>สวัสดี คุณหมอ</h2>
-        </div>
-      </div>
+      <DR_DiaryHeader />
 
       <IonContent>
         <div className="dashboard-container">
-          <div className="date">{today}</div>
+          <div className="date">{fullDate}</div>
 
           {/* statistics */}
           <div className="stats">
             <div className="card">
-              <p>คนไข้วันนี้</p>
+              <p>คนไข้ทั้งหมด</p>
               <h2>{todayPatients}</h2>
             </div>
 
@@ -113,16 +119,17 @@ const NewDashboard: React.FC = () => {
           </div>
 
           {/* ===== Graph ===== */}
-
-          <div className="graph">
-            <h3>คนไข้รายวัน (7 วันล่าสุด)</h3>
-
+          <div className="graph-card">
+            <div className="graph-head">จำนวนคนไข้ในแต่ละวัน (7 วันล่าสุด)</div>
             <div className="bars">
               {chartData.map((d, index) => (
                 <div key={index} className="bar-container">
+                  {/* ตัวเลข */}
+                  <span className="bar-value">{d.count} คน</span>
+
                   <div
                     className="bar"
-                    style={{ height: `${d.count * 15}px` }}
+                    style={{ height: `${(d.count / max) * 90}px` }}
                   ></div>
 
                   <span className="bar-label">{d.date.slice(5)}</span>

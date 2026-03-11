@@ -36,10 +36,6 @@ const PatientList: React.FC = () => {
     history.push(`/doctor/patient-detail/${id}`);
   };
 
-  const goDashboard = () => {
-    history.push("/dashboard");
-  };
-
   useEffect(() => {
     fetchPatients();
   }, []);

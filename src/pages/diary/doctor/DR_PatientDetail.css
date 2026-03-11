@@ -250,15 +250,11 @@
   align-items: center;
   gap: 12px;
 }
-.dr-detail-head h3 {
-  margin: 0;
-  color: #163456;
-  font-size: 1.05rem;
-}
+
 .dr-detail-date {
   margin: 8px 0 12px;
-  color: #516f8f;
-  font-size: 0.9rem;
+  color: #000;
+  font-size: bold;
 }
 .status-pill {
   display: inline-flex;

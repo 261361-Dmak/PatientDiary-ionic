@@ -24,12 +24,28 @@ const happinessEmoji: Record<number, string> = {
   5: "😁",
 };
 
+const HAPPINESS_LABELS: Record<number, string> = {
+  1: "แย่",
+  2: "ไม่ค่อยดี",
+  3: "ปกติ",
+  4: "ดี",
+  5: "ดีมาก",
+};
+
 const painEmoji: Record<number, string> = {
   0: "😊",
   1: "🙂",
   2: "😐",
   3: "😣",
   4: "😭",
+};
+
+const PAIN_LABELS: Record<number, string> = {
+  0: "ไม่เจ็บ",
+  1: "เจ็บน้อย",
+  2: "ปานกลาง",
+  3: "เจ็บมาก",
+  4: "เจ็บมากที่สุด",
 };
 
 const foodOptions = [
@@ -113,14 +129,24 @@ const DRHistoryCard: React.FC<{ entry: DRDiaryEntry }> = ({ entry }) => {
             <div className="item-icon big-emoji">
               {entry.happiness ? happinessEmoji[entry.happiness] : "-"}
             </div>
-            <div className="patient-item-title">ความสุข</div>
+            <div>
+              <div className="patient-item-title">ความสุข</div>
+              <div className="patient-item-value">
+                {entry.happiness ? HAPPINESS_LABELS[entry.happiness] : "-"}
+              </div>
+            </div>
           </div>
 
           <div className="patient-history-item">
             <div className="item-icon big-emoji ">
               {entry.painscore !== null ? painEmoji[entry.painscore] : "-"}
             </div>
-            <div className="patient-item-title">ความปวด</div>
+            <div>
+              <div className="patient-item-title">ความปวด</div>
+              <div className="patient-item-value">
+                  {entry.painscore !== null ? PAIN_LABELS[entry.painscore] : "-"}
+              </div>
+            </div>
           </div>
 
           <div className="patient-history-item">
@@ -146,7 +172,6 @@ const DRHistoryCard: React.FC<{ entry: DRDiaryEntry }> = ({ entry }) => {
               <div className="patient-item-value">{getFood()}</div>
             </div>
           </div>
-
         </div>
       </IonCardContent>
     </IonCard>
@@ -154,3 +179,18 @@ const DRHistoryCard: React.FC<{ entry: DRDiaryEntry }> = ({ entry }) => {
 };
 
 export default DRHistoryCard;
+
+// alter policy "Doctor can view all diaries"
+
+// on "public"."diary"
+
+// to authenticated
+
+// using (
+
+//
+//   (EXISTS ( SELECT 1
+//    FROM profiles
+//   WHERE ((profiles.id = auth.uid()) AND (profiles.role = 'doctor'::text))))
+
+// );

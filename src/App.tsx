@@ -68,17 +68,11 @@ const App: React.FC = () => (
         <Route exact path="/report">
           <Report />
         </Route>
-        <Route exact path="/doctor/patient-chart">
-          <DRDashboard />
-        </Route>
-        <Route exact path="/doctor/patient-chart/:patientId">
-          <DRDashboard />
+         <Route exact path="/doctor/newdashboard">
+          <NewDashboard />
         </Route>
         <Route exact path="/doctor/patient-list">
           <DRPatientList />
-        </Route>
-        <Route exact path="/doctor/patient-history">
-          <DRPatientHistory />
         </Route>
         <Route exact path="/doctor/patient-detail">
           <DRPatientDetail />
@@ -86,8 +80,17 @@ const App: React.FC = () => (
         <Route exact path="/doctor/patient-detail/:patientId">
           <DRPatientDetail />
         </Route>
-        <Route exact path="/doctor/newdashboard">
-          <NewDashboard />
+        <Route exact path="/doctor/patient-chart">
+          <DRDashboard />
+        </Route>
+        <Route exact path="/doctor/patient-chart/:patientId">
+          <DRDashboard />
+        </Route>
+        <Route exact path="/doctor/patient-history">
+          <DRPatientHistory />
+        </Route>
+        <Route exact path="/doctor/patient-history/:patientId">
+          <DRPatientHistory />
         </Route>
         <Route exact path="/appointment-detail/:date">
           <AppointmentDetail />

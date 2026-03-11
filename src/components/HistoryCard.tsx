@@ -42,12 +42,28 @@ const happinessEmoji: Record<number, string> = {
   5: "😁",
 };
 
+const HAPPINESS_LABELS: Record<number, string> = {
+  1: "แย่",
+  2: "ไม่ค่อยดี",
+  3: "ปกติ",
+  4: "ดี",
+  5: "ดีมาก",
+};
+
 const painEmoji: Record<number, string> = {
   0: "😊",
   1: "🙂",
   2: "😐",
   3: "😣",
   4: "😭",
+};
+
+const PAIN_LABELS: Record<number, string> = {
+  0: "ไม่เจ็บ",
+  1: "เจ็บน้อย",
+  2: "ปานกลาง",
+  3: "เจ็บมาก",
+  4: "เจ็บมากที่สุด",
 };
 
 const HistoryCard: React.FC<{ entry: DiaryEntry }> = ({ entry }) => {
@@ -91,10 +107,13 @@ const HistoryCard: React.FC<{ entry: DiaryEntry }> = ({ entry }) => {
         <div className="history-grid">
           <div className="history-item">
             <span className="item-icon big-emoji">
-              {entry.happiness ? happinessEmoji[entry.happiness] : "-"}
+              {entry.happiness ? happinessEmoji[entry.happiness] : "-" }
             </span>
             <div>
               <div className="item-title">ความสุข</div>
+              <div className="item-value">
+                {entry.happiness ? HAPPINESS_LABELS[entry.happiness] : "-"}
+              </div>
             </div>
           </div>
 
@@ -104,6 +123,9 @@ const HistoryCard: React.FC<{ entry: DiaryEntry }> = ({ entry }) => {
             </span>
             <div>
               <div className="item-title">ความปวด</div>
+              <div className="item-value">
+                {entry.painscore !== null ? PAIN_LABELS[entry.painscore] : "-"}
+              </div>
             </div>
           </div>
 

@@ -10,12 +10,13 @@ import {
 
 import { documentText, sad, statsChart } from "ionicons/icons";
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import "./DR_DiaryNavbar.css";
 
 const DoctorNavBar: React.FC = () => {
 
   const location = useLocation();
+  const { patientId } = useParams<{ patientId: string }>();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -28,8 +29,8 @@ const DoctorNavBar: React.FC = () => {
           {/* การบันทึก */}
           <IonButton
             fill="clear"
-            routerLink="/doctor/patient-history"    
-            className={isActive("/doctor/patient-history") ? "active" : ""}
+            routerLink={`/doctor/patient-history/${patientId}`}    
+            className={isActive(`/doctor/patient-history/${patientId}`) ? "active" : ""}
           >
             <IonIcon icon={documentText} />
             <IonLabel>การบันทึก</IonLabel>
@@ -38,8 +39,8 @@ const DoctorNavBar: React.FC = () => {
           {/* ระดับความเจ็บปวด */}
           <IonButton
             fill="clear"
-            routerLink="/doctor/patient-chart"
-            className={isActive("/doctor/patient-chart") ? "active" : ""}
+            routerLink={`/doctor/patient-chart/${patientId}`}
+            className={isActive(`/doctor/patient-chart/${patientId}`) ? "active" : ""}
           >
             <IonIcon icon={sad} />
             <IonLabel>ระดับความเจ็บปวด</IonLabel>
@@ -48,8 +49,8 @@ const DoctorNavBar: React.FC = () => {
           {/* ความถี่การบันทึก */}
           <IonButton
             fill="clear"
-            routerLink="/doctor/patient-detail"
-            className={isActive("/doctor/patient-detail") ? "active" : ""}
+            routerLink={`/doctor/patient-detail/${patientId}`}
+            className={isActive(`/doctor/patient-detail/${patientId}`) ? "active" : ""}
           >
             <IonIcon icon={statsChart} />
             <IonLabel>ความถี่การบันทึกแต่ละวัน</IonLabel>

@@ -19,7 +19,7 @@ interface AppHeaderProps {
 }
 
 const DR_DiaryHeader: React.FC<AppHeaderProps> = ({
-  backTo = "/newdashboard",
+  backTo = "/doctor-dashboard",
   title,
 }) => {
 

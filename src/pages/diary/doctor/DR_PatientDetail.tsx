@@ -310,9 +310,7 @@ const DRPatientDetail: React.FC = () => {
             <DR_DiaryHeader />
           </IonButtons>
           <IonTitle className="dr-page-title">การบันทึก</IonTitle>
-          <IonButtons slot="end">
-            
-          </IonButtons>
+          <IonButtons slot="end"></IonButtons>
         </IonToolbar>
       </IonHeader>
 
@@ -473,14 +471,13 @@ const DRPatientDetail: React.FC = () => {
 
             <section className="dr-daily-detail">
               <div className="dr-detail-head">
-                <h3>การบันทึกของแต่ละวัน</h3>
+                <p className="dr-detail-date">
+                  บันทึกใน {formatThaiFullDate(selectedDateKey)}
+                </p>
                 <span className={`status-pill ${selectedStatus}`}>
                   {STATUS_LABELS[selectedStatus]}
                 </span>
               </div>
-              <p className="dr-detail-date">
-                {formatThaiFullDate(selectedDateKey)}
-              </p>
 
               {selectedRecord ? (
                 <div className="dr-detail-grid">
@@ -510,7 +507,6 @@ const DRPatientDetail: React.FC = () => {
       </IonContent>
 
       <DoctorNavBar />
-      
     </IonPage>
   );
 };
