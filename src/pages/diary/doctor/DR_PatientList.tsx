@@ -5,31 +5,30 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
   IonPage,
   IonSearchbar,
   IonSegment,
   IonSegmentButton,
-  IonLabel,
   IonTitle,
-  IonToolbar
-} from '@ionic/react';
+  IonToolbar,
+} from "@ionic/react";
 
 import {
   arrowBack,
   personCircle,
   swapVerticalOutline,
-  textOutline
-} from 'ionicons/icons';
+  textOutline,
+} from "ionicons/icons";
 
-import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import { supabase } from '../../../supabaseClient';
-
-import './DR_PatientList.css';
+import { supabase } from "../../../supabaseClient";
 
 const PatientList: React.FC = () => {
-
   const history = useHistory();
 
   const [patients, setPatients] = useState<any[]>([]);
@@ -38,11 +37,7 @@ const PatientList: React.FC = () => {
   const [sortType, setSortType] = useState("az");
 
   const goDetail = (id: string) => {
-    history.push(/doctor/patient-detail/${id});
-  };
-
-  const goDashboard = () => {
-    history.push("/dashboard");
+    history.push(`/doctor/patient-detail/${id}`);
   };
 
   useEffect(() => {
@@ -50,10 +45,7 @@ const PatientList: React.FC = () => {
   }, []);
 
   const fetchPatients = async () => {
-
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*');
+    const { data, error } = await supabase.from("profiles").select("*");
 
     if (error) {
       console.log(error);
@@ -62,9 +54,9 @@ const PatientList: React.FC = () => {
 
     const formatted = data.map((p: any) => ({
       _id: p.id,
-      name: ${p.first_name} ${p.last_name},
+      name: `${p.first_name} ${p.last_name}`,
       phone: p.phone,
-      image: null
+      image: null,
     }));
 
     setPatients(formatted);
@@ -72,18 +64,16 @@ const PatientList: React.FC = () => {
   };
 
   const handleSearch = (text: string) => {
-
     setSearchText(text);
 
-    let result = patients.filter(p =>
-      p.name.toLowerCase().includes(text.toLowerCase())
+    let result = patients.filter((p) =>
+      p.name.toLowerCase().includes(text.toLowerCase()),
     );
 
     sortPatients(result, sortType);
   };
 
   const sortPatients = (list: any[], type: string) => {
-
     let sorted = [...list];
 
     if (type === "az") {
@@ -98,7 +88,6 @@ const PatientList: React.FC = () => {
   };
 
   const changeSort = (type: string) => {
-
     setSortType(type);
 
     sortPatients(filteredPatients, type);
@@ -106,10 +95,8 @@ const PatientList: React.FC = () => {
 
   return (
     <IonPage>
-
       <IonHeader>
         <IonToolbar color="primary">
-
           <IonButtons slot="start">
             <IonButton onClick={() => history.goBack()}>
               <IonIcon icon={arrowBack} />
@@ -117,12 +104,10 @@ const PatientList: React.FC = () => {
           </IonButtons>
 
           <IonTitle>รายชื่อคนไข้</IonTitle>
-
         </IonToolbar>
       </IonHeader>
 
       <IonContent className="patient-bg">
-
         <IonSearchbar
           value={searchText}
           placeholder="ค้นหาชื่อคนไข้"
@@ -133,7 +118,6 @@ const PatientList: React.FC = () => {
           value={sortType}
           onIonChange={(e) => changeSort(e.detail.value as string)}
         >
-
           <IonSegmentButton value="az">
             <IonIcon icon={textOutline} />
             <IonLabel>ก-ฮ</IonLabel>
@@ -143,21 +127,17 @@ const PatientList: React.FC = () => {
             <IonIcon icon={swapVerticalOutline} />
             <IonLabel>ฮ-ก</IonLabel>
           </IonSegmentButton>
-
         </IonSegment>
 
         {/* Patient Cards */}
 
         {filteredPatients.map((patient) => (
-
           <div
             key={patient._id}
             className="patient-card"
             onClick={() => goDetail(patient._id)}
           >
-
             <div className="patient-left">
-
               <IonAvatar>
                 {patient.image ? (
                   <img src={patient.image} alt="patient" />
@@ -170,17 +150,10 @@ const PatientList: React.FC = () => {
                 <div className="patient-name">{patient.name}</div>
                 <div className="patient-phone">{patient.phone}</div>
               </div>
-
             </div>
-
-            
-
           </div>
-
         ))}
-
       </IonContent>
-
     </IonPage>
   );
 };
