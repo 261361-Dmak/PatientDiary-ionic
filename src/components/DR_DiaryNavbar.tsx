@@ -53,7 +53,7 @@ const DoctorNavBar: React.FC = () => {
             className={isActive(`/doctor/patient-detail/${patientId}`) ? "active" : ""}
           >
             <IonIcon icon={statsChart} />
-            <IonLabel>ความถี่การบันทึกแต่ละวัน</IonLabel>
+            <IonLabel>การบันทึกในแต่ละวัน</IonLabel>
           </IonButton>
 
         </IonButtons>
