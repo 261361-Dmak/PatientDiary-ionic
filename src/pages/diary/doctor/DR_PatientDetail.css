@@ -153,14 +153,14 @@
     box-shadow 0.15s ease;
 }
 .dr-day-circle.good {
-  border-color: #85c58b;
+  border-color: #3c9c49;
   color: #3c9c49;
   background: #f3fff3;
 }
 .dr-day-circle.bad {
-  border-color: #f08a8a;
-  color: #d54242;
-  background: #fff3f3;
+  border-color: #ff0000;
+  color: #ff0000;
+  background: #f3fff3;
 }
 .dr-day-circle.none {
   background: #fff;
@@ -203,10 +203,15 @@
   background: #5eb869;
 }
 .dr-legend .bad {
-  background: #eb5b5b;
+  background: #ef2b2d;
 }
 .dr-legend .none {
   background: #c7d4e7;
+}
+
+.dr-emoji {
+  font-size: 18px;
+  line-height: 1;
 }
 
 /* ── Month Summary ── */

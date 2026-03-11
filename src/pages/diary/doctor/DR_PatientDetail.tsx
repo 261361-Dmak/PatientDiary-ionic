@@ -95,6 +95,11 @@ const STATUS_LABELS: Record<DayStatus, string> = {
   none: "ไม่มีบันทึก",
 };
 
+const emojiMap: any = {
+  good: "😀",
+  bad: "😞",
+};
+
 const toDateKey = (date: Date): string =>
   `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(
     date.getDate(),
@@ -364,8 +369,8 @@ const DRPatientDetail: React.FC = () => {
               <div className="dr-calendar-grid">
                 {calendarCells.map((cell) => {
                   const status = getDayStatus(recordsByDate[cell.key]);
-                  const icon =
-                    status === "good" ? checkmarkOutline : closeOutline;
+                  const emoji = emojiMap[status];
+
                   return (
                     <button
                       key={cell.key}
@@ -374,10 +379,15 @@ const DRPatientDetail: React.FC = () => {
                       className={`dr-day-cell ${cell.inCurrentMonth ? "" : "muted"}`}
                     >
                       <span
-                        className={`dr-day-circle ${status} ${cell.key === selectedDateKey ? "selected" : ""}`}
+                        className={`dr-day-circle ${status} ${
+                          cell.key === selectedDateKey ? "selected" : ""
+                        }`}
                       >
-                        {status !== "none" && <IonIcon icon={icon} />}
+                        {status !== "none" && (
+                          <span className="dr-emoji">{emoji}</span>
+                        )}
                       </span>
+
                       <span className="dr-day-number">{cell.dayNumber}</span>
                     </button>
                   );

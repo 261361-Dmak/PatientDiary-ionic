@@ -34,6 +34,7 @@ import "@ionic/react/css/structure.css";
 import "@ionic/react/css/typography.css";
 import Contact from "./pages/diary/Contact";
 import "./theme/variables.css";
+import TestPage from "./pages/diary/test";
 
 setupIonicReact();
 
@@ -91,6 +92,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/doctor/patient-history/:patientId">
           <DRPatientHistory />
+        </Route>
+        <Route exact path="/test">
+          <TestPage />
         </Route>
         <Route exact path="/appointment-detail/:date">
           <AppointmentDetail />

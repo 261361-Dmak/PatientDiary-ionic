@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { IonIcon } from "@ionic/react";
 import {
   chevronBackOutline,
   chevronForwardOutline,
 } from "ionicons/icons";
-import "./DiaryCalender.css";
-import { supabase } from "../supabaseClient";
+import "./test.css";
+import { supabase } from "../../supabaseClient";
 
 interface CalendarCell {
   key: string;
@@ -88,7 +88,7 @@ const buildCalendarCells = (monthStart: Date): CalendarCell[] => {
   return cells;
 };
 
-const DiaryCalender: React.FC = () => {
+const TestPage: React.FC = () => {
   const [moods, setMoods] = useState<any>({});
   const [focusedMonth, setFocusedMonth] = useState(() => {
     const now = new Date();
@@ -231,4 +231,4 @@ const DiaryCalender: React.FC = () => {
   );
 };
 
-export default DiaryCalender;
+export default TestPage;
