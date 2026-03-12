@@ -13,7 +13,7 @@ const doctors: Doctor[] = [
     phone: "065-9689389",
     email: "-",
     lineId: "@260kyvuk",
-    avatar: "assets/Diary/doctor/doctordeer.jpg",
+    avatar: "/Diary/doctor/doctordeer.jpg",
   },
 ];
 
